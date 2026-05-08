@@ -1,0 +1,30 @@
+package schneider.pageobjects;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+import schneider.abstractcomponent.AbstractComponent;
+
+public class Certificates extends AbstractComponent{
+	
+	public Certificates(WebDriver driver) {
+		super(driver);
+		PageFactory.initElements(driver, this);
+		
+	}
+
+	@FindBy(xpath = "//a[@href=/admin/certificates']")
+	WebElement certificateNavigation;
+
+	@FindBy(xpath = "//h2[normalize-space()='Certificates']")
+	WebElement certificateScreenName;
+	
+
+	public void goToCategory() {
+		certificateNavigation.click();
+		waitElementToAppear(certificateScreenName);
+	}
+	
+}

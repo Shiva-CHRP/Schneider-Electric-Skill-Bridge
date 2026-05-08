@@ -3,6 +3,6 @@
 <suite name="Suite">
 <listeners><listener class-name="schneider.data.Listener"/></listeners>
   <test thread-count="5" name="Test"> 
-   <classes> <class name="schneider.tests.SampleTest"></class></classes>
+   <classes> <class name="schneider.tests.LoginTest"></class></classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

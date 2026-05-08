@@ -31,7 +31,7 @@ public class LoginPage extends AbstractComponent{
 		emailAddress.sendKeys(email);
 		password.sendKeys(pass);
 		waitElementToBeClickable(signinButton);
-		signinButton.click();
+		signinButton.click();	
 	}
 
 	public void goTo() {

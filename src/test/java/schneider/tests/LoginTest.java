@@ -6,27 +6,26 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.ExtentTest;
 
 import schneider.data.Listener;
-import schneider.pageobjects.LoginPage;
 import schneider.testcomponents.BaseTest;
-@Listeners(Listener.class)
-public class LoginTest extends BaseTest{
-	 @Test
-	public void login() throws InterruptedException  {
-		LoginPage loginPage = new LoginPage(driver);
-		loginPage.login("shrinivas.kulkarni@se.com", "Nivas@123");
-	}
-	 
-	 
-	 
-	 @Test
-	    public void testPass() {
-	        ExtentTest test = extent.createTest("Test Case 1");
-	        test.pass("Test passed successfully");
-	    }
 
-	    @Test
-	    public void testFail() {
-	        ExtentTest test = extent.createTest("Test Case 2");
-	        test.fail("Test failed");
-	    }
+@Listeners(Listener.class)
+public class LoginTest extends BaseTest {
+
+	@Test
+	public void login() throws InterruptedException {
+		loginPage.goTo();
+		loginPage.login("shrinivas.kulkarni@se.com", "Nivas@123");
+		offerType.goToOfferTypePage();
+		offerType.createOfferType("Test");
+		
+		Thread.sleep(4000);
+	}
+
+	
+	  /*@Test public void testPass() { ExtentTest test =
+	  extent.createTest("Test Case 1"); test.pass("Test passed successfully"); }
+	  
+	  @Test public void testFail() { ExtentTest test =
+	  extent.createTest("Test Case 2"); test.fail("Test failed"); }
+	 */
 }
