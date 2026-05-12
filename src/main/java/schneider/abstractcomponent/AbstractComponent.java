@@ -1,89 +1,103 @@
 package schneider.abstractcomponent;
 
-import java.time.Duration;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementClickInterceptedException;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import schneider.utils.WaitUtils;
 
 public class AbstractComponent {
 
 	protected WebDriver driver;
-	protected WebDriverWait wait;
+	protected WaitUtils waitUtils;
 
 	public AbstractComponent(WebDriver driver) {
+
 		this.driver = driver;
-		this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+		this.waitUtils = new WaitUtils(driver);
+
 		PageFactory.initElements(driver, this);
 	}
 
-	// Wait for element using WebElemen
+	// WAIT WRAPPERS
 	public void waitElementToAppear(WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.visibilityOf(element));
+
+		waitUtils.waitForVisibility(element);
 	}
 
-	// Wait for element using locator (By)
-	public void waitElementToAppear(By locator) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-	}
-
-	// Wait until element is clickable
 	public void waitElementToBeClickable(WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.elementToBeClickable(element));
+
+		waitUtils.waitForClickable(element);
 	}
 
-	// Wait until element disappears (useful for loaders)
 	public void waitForElementToDisappear(WebElement element) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.invisibilityOf(element));
-	}
 
+		waitUtils.waitForInvisibility(element);
+	}
+	
+	public void waitForVisibility(By locator) {
+
+		waitUtils.waitForVisibility(locator);
+	}
+	public void waitForVisibility(WebElement element) {
+
+		waitUtils.waitForVisibility(element);
+	}
+	
 	// Drop Downs
 	public void selectByVisibleText(WebElement element, String text) {
-		Select dropdown = new Select(element);
-		dropdown.selectByVisibleText(text);
+
+		new Select(element).selectByVisibleText(text);
 	}
 
 	public void selectByValue(WebElement element, String value) {
-		Select dropdown = new Select(element);
-		dropdown.selectByValue(value);
+
+		new Select(element).selectByValue(value);
+	}
+
+	public void selectByIndex(WebElement element, int index) {
+
+		new Select(element).selectByIndex(index);
 	}
 
 	// Alert
 	public void acceptAlert() {
-		wait.until(ExpectedConditions.alertIsPresent());
+
+		waitUtils.waitForAlert();
+
 		driver.switchTo().alert().accept();
 	}
 
 	public void dismissAlert() {
-		wait.until(ExpectedConditions.alertIsPresent());
+
+		waitUtils.waitForAlert();
+
 		driver.switchTo().alert().dismiss();
 	}
 
 	public String getAlertText() {
-		wait.until(ExpectedConditions.alertIsPresent());
+
+		waitUtils.waitForAlert();
+
 		return driver.switchTo().alert().getText();
 	}
 
 	// Scroll
 	public void scrollToElement(WebElement element) {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+
+		waitUtils.scrollIntoView(element);
 	}
 
 	// Window Handlers
 	public void switchToWindow(String title) {
+
 		for (String handle : driver.getWindowHandles()) {
+
 			driver.switchTo().window(handle);
+
 			if (driver.getTitle().contains(title)) {
 				break;
 			}
@@ -93,9 +107,8 @@ public class AbstractComponent {
 	protected By addBtn = By.xpath("//div[@title='Add']");
 
 	public void clickAddButton() {
-		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(addBtn));
-		element.click();
+
+		driver.findElement(addBtn).click();
 	}
 
-	 
 }

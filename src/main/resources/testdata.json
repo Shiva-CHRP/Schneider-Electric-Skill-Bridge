@@ -1,0 +1,28 @@
+{
+  "loginValidation": {
+    "emptyEmail": {
+      "username": "",
+      "password": "Admin@123",
+      "expectedUsernameError": "Email is required"
+    },
+    "emptyPassword": {
+      "username": "admin@example.com",
+      "password": "",
+      "expectedPasswordError": "Password is required"
+    },
+    "invalidCredintals": {
+      "username": "admin@example.com",
+      "password": "Admin@1234",
+      "expectedInvalidError": "Invalid email or password."
+    },
+    "passwordLength": {
+      "username": "admin@example.com",
+      "password": "Adm",
+      "expectedPasswordLengthError": "Password must be at least 6 characters"
+    },
+    "validLogin": {
+      "username": "shrinivas.kulkarni@se.com",
+      "password": "Nivas@123"
+    }
+  }
+}
