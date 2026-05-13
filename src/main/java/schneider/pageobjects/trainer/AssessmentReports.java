@@ -15,13 +15,13 @@ public class AssessmentReports extends AbstractComponent{
 		
 	}
 	
-	@FindBy(xpath = "//a[@href=/trainer/assessment-reports']")
+	@FindBy(xpath = "//a[@href='/trainer/assessment-reports']")
 	WebElement assessmentReportNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='Assessment Reports']")
 	WebElement assessmentReportScreenName;
 
-	public void goToCategory() {
+	public void goToAssessmentReports() {
 		assessmentReportNavigation.click();
 		waitElementToAppear(assessmentReportScreenName);
 	}

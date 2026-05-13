@@ -7,20 +7,20 @@ import org.openqa.selenium.support.PageFactory;
 
 import schneider.abstractcomponent.AbstractComponent;
 
-public class Events extends AbstractComponent{
+public class UserEvents extends AbstractComponent{
 
-	public Events(WebDriver driver) {
+	public UserEvents(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(driver, this);
 	}
 	
-	@FindBy(xpath = "//a[@href=/user/events']")
+	@FindBy(xpath = "//a[@href='/user/events']")
 	WebElement eventsNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='Events & Calendar']")
 	WebElement eventsScreenName;
 
-	public void goToCategory() {
+	public void goToUserEvents() {
 		eventsNavigation.click();
 		waitElementToAppear(eventsScreenName);
 	}

@@ -1,8 +1,7 @@
-package schneider.listener;
+package schneider.listenr;
 
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import org.testng.TestListenerAdapter;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -26,7 +25,7 @@ public class Listener extends BaseTest implements ITestListener {
 		test.get().pass("Test Passed");
 		String testName = result.getMethod().getMethodName();
 
-		String path = ScreenshotUtils.getScreenshot(testName);
+		String path = ScreenshotUtils.getScreenshot(driver,testName);
 
 		test.get().addScreenCaptureFromPath(path);
 	}
@@ -36,7 +35,7 @@ public class Listener extends BaseTest implements ITestListener {
 		test.get().fail(result.getThrowable());
 		String testName = result.getMethod().getMethodName();
 
-		String path = ScreenshotUtils.getScreenshot(testName);
+		String path = ScreenshotUtils.getScreenshot(driver,testName);
 
 		test.get().addScreenCaptureFromPath(path);
 	}

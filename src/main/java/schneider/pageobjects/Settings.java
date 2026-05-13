@@ -15,13 +15,13 @@ public class Settings extends AbstractComponent{
 		
 	}
 
-	@FindBy(xpath = "//a[@href=/admin/settings']")
+	@FindBy(xpath = "//a[@href='/admin/settings']")
 	WebElement settingNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='Settings']")
 	WebElement settingScreenName;
 	
-	public void goToCategory() {
+	public void goToSettings() {
 		settingNavigation.click();
 		waitElementToAppear(settingScreenName);
 	}

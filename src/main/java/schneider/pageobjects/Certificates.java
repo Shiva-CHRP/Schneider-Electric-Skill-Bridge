@@ -15,14 +15,14 @@ public class Certificates extends AbstractComponent{
 		
 	}
 
-	@FindBy(xpath = "//a[@href=/admin/certificates']")
+	@FindBy(xpath = "//a[@href='/admin/certificates']")
 	WebElement certificateNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='Certificates']")
 	WebElement certificateScreenName;
 	
 
-	public void goToCategory() {
+	public void goToCertificate() {
 		certificateNavigation.click();
 		waitElementToAppear(certificateScreenName);
 	}

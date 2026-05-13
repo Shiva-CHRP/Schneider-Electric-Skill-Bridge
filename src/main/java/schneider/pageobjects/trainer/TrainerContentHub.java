@@ -7,21 +7,21 @@ import org.openqa.selenium.support.PageFactory;
 
 import schneider.abstractcomponent.AbstractComponent;
 
-public class ContentHub extends AbstractComponent{
+public class TrainerContentHub extends AbstractComponent{
 
-	public ContentHub(WebDriver driver) {
+	public TrainerContentHub(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(driver, this);
 		
 	}
 	
-	@FindBy(xpath = "//a[@href=/trainer/content-hub']")
+	@FindBy(xpath = "//a[@href='/trainer/content-hub']")
 	WebElement contentHubNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='Content Hub']")
 	WebElement contentHubScreenName;
 
-	public void goToCategory() {
+	public void goToTrainerContentHub() {
 		contentHubNavigation.click();
 		waitElementToAppear(contentHubScreenName);
 	}

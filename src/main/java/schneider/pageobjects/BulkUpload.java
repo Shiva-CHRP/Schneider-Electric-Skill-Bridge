@@ -15,14 +15,14 @@ public class BulkUpload extends AbstractComponent{
 		
 	}
 
-	@FindBy(xpath = "//a[@href=/admin/assessment-hub/bulk-upload']")
+	@FindBy(xpath = "//a[@href='/admin/assessment-hub/bulk-upload']")
 	WebElement bulkUploadNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='Bulk Upload Questions']")
 	WebElement bulkUploadScreenName;
 
 	
-	public void goToCategory() {
+	public void goToBulkUpload() {
 		bulkUploadNavigation.click();
 		waitElementToAppear(bulkUploadScreenName);
 	}

@@ -21,7 +21,7 @@ public class Users extends AbstractComponent{
 	@FindBy(xpath = "//h2[normalize-space()='Users Management']")
 	WebElement userScreenName;
 
-	public void goToCategory() {
+	public void goToUsers() {
 		userNavigation.click();
 		waitElementToAppear(userScreenName);
 	}

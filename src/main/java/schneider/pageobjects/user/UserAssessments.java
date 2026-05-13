@@ -7,20 +7,20 @@ import org.openqa.selenium.support.PageFactory;
 
 import schneider.abstractcomponent.AbstractComponent;
 
-public class Assessments extends AbstractComponent{
+public class UserAssessments extends AbstractComponent{
 
-	public Assessments(WebDriver driver) {
+	public UserAssessments(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(driver, this);
 	}
 	
-	@FindBy(xpath = "//a[@href=/user/assessments']")
+	@FindBy(xpath = "//a[@href='/user/assessments']")
 	WebElement assessmentsNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='Assessments']")
 	WebElement assessmentsScreenName;
 
-	public void goToCategory() {
+	public void goToUserAssessments() {
 		assessmentsNavigation.click();
 		waitElementToAppear(assessmentsScreenName);
 	}

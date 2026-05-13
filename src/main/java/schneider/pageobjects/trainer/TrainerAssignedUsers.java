@@ -7,21 +7,21 @@ import org.openqa.selenium.support.PageFactory;
 
 import schneider.abstractcomponent.AbstractComponent;
 
-public class AssignedUsers extends AbstractComponent{
+public class TrainerAssignedUsers extends AbstractComponent{
 
-	public AssignedUsers(WebDriver driver) {
+	public TrainerAssignedUsers(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(driver, this);
 		
 	}
 	
-	@FindBy(xpath = "//a[@href=/trainer/assigned-users']")
+	@FindBy(xpath = "//a[@href='/trainer/assigned-users']")
 	WebElement assignedUserNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='Assigned Users']")
 	WebElement assignedUserScreenName;
 
-	public void goToCategory() {
+	public void goToTrainerAssignedUsers() {
 		assignedUserNavigation.click();
 		waitElementToAppear(assignedUserScreenName);
 	}

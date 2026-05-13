@@ -15,13 +15,13 @@ public class EventsCalendar extends AbstractComponent{
 		
 	}
 	
-	@FindBy(xpath = "//a[@href=/trainer/events-calendar']")
+	@FindBy(xpath = "//a[@href='/trainer/events-calendar']")
 	WebElement eventsCalendarNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='Events']")
 	WebElement eventsCalendarScreenName;
 
-	public void goToCategory() {
+	public void goToEventsCalendar() {
 		eventsCalendarNavigation.click();
 		waitElementToAppear(eventsCalendarScreenName);
 	}

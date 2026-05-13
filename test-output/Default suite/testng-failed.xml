@@ -3,18 +3,15 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="schneider.tests.LoginTest">
+      <class name="schneider.tests.SmokeTest">
         <methods>
           <include name="setUup"/>
-          <include name="verify_Invalid_Credintals_Validation"/>
           <include name="setup"/>
-          <include name="verify_Empty_Password_Validation"/>
-          <include name="verify_Password_Length_Validation"/>
+          <include name="Smoke"/>
           <include name="tearDown"/>
           <include name="tearDownSuite"/>
-          <include name="verify_Empty_Username_Validation"/>
         </methods>
-      </class> <!-- schneider.tests.LoginTest -->
+      </class> <!-- schneider.tests.SmokeTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

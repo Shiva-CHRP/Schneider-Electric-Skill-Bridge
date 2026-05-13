@@ -15,13 +15,13 @@ public class QuestionStrategies extends AbstractComponent{
 		
 	}
 
-	@FindBy(xpath = "//a[@href=/admin/question-strategies']")
+	@FindBy(xpath = "//a[@href='/admin/question-strategies']")
 	WebElement questionStrategiesNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='Question Strategies']")
 	WebElement questionStrategiesScreenName;
 
-	public void goToCategory() {
+	public void goToQuestionStrategies() {
 		questionStrategiesNavigation.click();
 		waitElementToAppear(questionStrategiesScreenName);
 	}

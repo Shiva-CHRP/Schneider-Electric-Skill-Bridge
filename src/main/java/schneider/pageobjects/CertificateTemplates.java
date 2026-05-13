@@ -15,13 +15,13 @@ public class CertificateTemplates extends AbstractComponent{
 		
 	}
 
-	@FindBy(xpath = "//a[@href=/admin/certificate-templates']")
+	@FindBy(xpath = "//a[@href='/admin/certificate-templates']")
 	WebElement templateNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='Certificate Templates']")
 	WebElement templateScreenName;
 	
-	public void goToCategory() {
+	public void goToCertificateTemplates() {
 		templateNavigation.click();
 		waitElementToAppear(templateScreenName);
 	}

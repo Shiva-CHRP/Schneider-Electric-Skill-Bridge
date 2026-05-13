@@ -7,21 +7,21 @@ import org.openqa.selenium.support.PageFactory;
 
 import schneider.abstractcomponent.AbstractComponent;
 
-public class Settings extends AbstractComponent{
+public class TrainerSettings extends AbstractComponent{
 
-	public Settings(WebDriver driver) {
+	public TrainerSettings(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(driver, this);
 		
 	}
 	
-	@FindBy(xpath = "//a[@href=/trainer/settings']")
+	@FindBy(xpath = "//a[@href='/trainer/settings']")
 	WebElement settingsNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='Settings']")
 	WebElement settingsScreenName;
 
-	public void goToCategory() {
+	public void goToTrainerSettings() {
 		settingsNavigation.click();
 		waitElementToAppear(settingsScreenName);
 	}

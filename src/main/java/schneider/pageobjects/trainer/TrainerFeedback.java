@@ -7,21 +7,21 @@ import org.openqa.selenium.support.PageFactory;
 
 import schneider.abstractcomponent.AbstractComponent;
 
-public class Feedback extends AbstractComponent{
+public class TrainerFeedback extends AbstractComponent{
 
-	public Feedback(WebDriver driver) {
+	public TrainerFeedback(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(driver, this);
 		
 	}
 	
-	@FindBy(xpath = "//a[@href=/trainer/feedback']")
+	@FindBy(xpath = "//a[@href='/trainer/feedback']")
 	WebElement feedbackNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='General Feedback']")
 	WebElement feedbackScreenName;
 
-	public void goToCategory() {
+	public void goToTrainerFeedback() {
 		feedbackNavigation.click();
 		waitElementToAppear(feedbackScreenName);
 	}

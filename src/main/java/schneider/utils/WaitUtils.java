@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -83,5 +84,26 @@ public class WaitUtils {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 
 		js.executeScript("arguments[0].click();", element);
+	}
+
+	public static void waitForPageLoad(WebDriver driver) {
+
+		try {
+
+            WebDriverWait wait =
+                    new WebDriverWait(driver, Duration.ofSeconds(10));
+
+            wait.until(webDriver ->
+                    ((JavascriptExecutor) webDriver)
+                            .executeScript("return document.readyState")
+                            .equals("complete"));
+
+            // Small UI stabilization wait
+            Thread.sleep(1000);
+
+        } catch (Exception e) {
+
+            System.out.println("Page load wait skipped");
+        }
 	}
 }

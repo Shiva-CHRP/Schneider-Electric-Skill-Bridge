@@ -15,13 +15,13 @@ public class Feedback extends AbstractComponent{
 		
 	}
 
-	@FindBy(xpath = "//a[@href=/admin/feedback-management/feedback']")
+	@FindBy(xpath = "//a[@href='/admin/feedback-management/feedback']")
 	WebElement feedbackNavigation;
 	
 	@FindBy(xpath = "//h2[normalize-space()='General Feedback']")
 	WebElement feedbackScreenName;
 
-	public void goToCategory() {
+	public void goToFeedback() {
 		feedbackNavigation.click();
 		waitElementToAppear(feedbackScreenName);
 	}

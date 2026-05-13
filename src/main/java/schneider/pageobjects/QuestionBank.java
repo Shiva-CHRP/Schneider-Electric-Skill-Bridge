@@ -15,14 +15,14 @@ public class QuestionBank extends AbstractComponent{
 		
 	}
 
-	@FindBy(xpath = "//a[@href=/admin/assessment-hub/question-bank']")
+	@FindBy(xpath = "//a[@href='/admin/assessment-hub/question-bank']")
 	WebElement questionBankNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='Questions']")
 	WebElement questionBankScreenName;
 
 	
-	public void goToCategory() {
+	public void goToQuestionBank() {
 		questionBankNavigation.click();
 		waitElementToAppear(questionBankScreenName);
 	}

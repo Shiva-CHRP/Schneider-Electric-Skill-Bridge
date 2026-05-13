@@ -15,13 +15,13 @@ public class Events extends AbstractComponent{
 		
 	}
 
-	@FindBy(xpath = "//a[@href=/admin/events']")
+	@FindBy(xpath = "//a[@href='/admin/events']")
 	WebElement eventsNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='Events']")
 	WebElement eventScreenName;
 
-	public void goToCategory() {
+	public void goToEvents() {
 		eventsNavigation.click();
 		waitElementToAppear(eventScreenName);
 	}

@@ -15,14 +15,14 @@ public class External extends AbstractComponent{
 		
 	}
 
-	@FindBy(xpath = "//a[@href=/admin/assessment-hub/external-assessments']")
+	@FindBy(xpath = "//a[@href='/admin/assessment-hub/external-assessments']")
 	WebElement externalAssessmentNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='External Assessments']")
 	WebElement externalAssessmentScreenName;
 	
 
-	public void goToCategory() {
+	public void goToExternal() {
 		externalAssessmentNavigation.click();
 		waitElementToAppear(externalAssessmentScreenName);
 	}

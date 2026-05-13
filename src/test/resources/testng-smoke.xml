@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Smoke Suite">
 	<listeners>
-		<listener class-name="schneider.listener.Listener" />
+		<listener class-name="schneider.listenr.Listener" />
 	</listeners>
 	<test thread-count="5" name="Smoke Tests">
 		<groups>

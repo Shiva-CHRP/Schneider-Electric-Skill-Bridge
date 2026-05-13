@@ -22,7 +22,7 @@ public class ContentHub extends AbstractComponent{
 	WebElement contentHubScreenName;
 	
 
-	public void goToCategory() {
+	public void goToContentHub() {
 		contentHubNavigation.click();
 		waitElementToAppear(contentHubScreenName);
 	}

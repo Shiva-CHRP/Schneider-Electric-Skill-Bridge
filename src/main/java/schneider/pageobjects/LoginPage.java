@@ -7,6 +7,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import schneider.abstractcomponent.AbstractComponent;
+import schneider.utils.StepName;
+
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -53,6 +55,7 @@ public class LoginPage extends AbstractComponent {
 		signinButton.click();
 	}
 
+	@StepName("Enter User Email Address")
 	public void enterUsername(String username) {
 		waitForVisibility(emailAddress);
 		waitElementToBeClickable(emailAddress);
@@ -65,7 +68,7 @@ public class LoginPage extends AbstractComponent {
 		//emailAddress.clear();
 		emailAddress.sendKeys(username);
 	}
-
+	@StepName("Enter User Password")
 	public void enterPassword(String passwords) {
 		waitForVisibility(password);
 		waitElementToBeClickable(password);
@@ -78,7 +81,7 @@ public class LoginPage extends AbstractComponent {
 		password.clear();
 		password.sendKeys(passwords);
 	}
-	
+	@StepName("Click on the Login Button")
 	public void clickLogin() {
 		signinButton.click();		
     }

@@ -14,7 +14,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import schneider.listeners.SeleniumListener;
 
+import org.openqa.selenium.support.events.EventFiringDecorator;
 public class WebDriverFactory {
 
 	private static ThreadLocal<WebDriver> driver =
@@ -39,13 +41,17 @@ public class WebDriverFactory {
 
             driver.set(new ChromeDriver());
         }
+        SeleniumListener listener = new SeleniumListener();
+        EventFiringDecorator<WebDriver> decorator =
+                new EventFiringDecorator<>(listener);
 
+       
         getDriver().manage().window().maximize();
 
         getDriver().manage().timeouts()
                 .implicitlyWait(Duration.ofSeconds(2));
-
-        return getDriver();
+        return decorator.decorate(driver.get());
+        //return getDriver();
     }
 
     public static WebDriver getDriver() {

@@ -15,13 +15,13 @@ public class TrainerDashboard extends AbstractComponent{
 		
 	}
 	
-	@FindBy(xpath = "//a[@href=/trainer']")
+	@FindBy(xpath = "//a[@href='/trainer']")
 	WebElement tDashboardNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='Trainer Dashboard']")
 	WebElement tDashboardScreenName;
 
-	public void goToCategory() {
+	public void goToTrainerDashboard() {
 		tDashboardNavigation.click();
 		waitElementToAppear(tDashboardScreenName);
 	}

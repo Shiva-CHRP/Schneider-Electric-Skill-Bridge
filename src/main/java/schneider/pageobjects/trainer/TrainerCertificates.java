@@ -7,21 +7,21 @@ import org.openqa.selenium.support.PageFactory;
 
 import schneider.abstractcomponent.AbstractComponent;
 
-public class Certificates extends AbstractComponent{
+public class TrainerCertificates extends AbstractComponent{
 
-	public Certificates(WebDriver driver) {
+	public TrainerCertificates(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(driver, this);
 		
 	}
 	
-	@FindBy(xpath = "//a[@href=/trainer/certificates']")
+	@FindBy(xpath = "//a[@href='/trainer/certificates']")
 	WebElement certificatesNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='Certificates']")
 	WebElement certificatesScreenName;
 
-	public void goToCategory() {
+	public void goToTrainerCertificates() {
 		certificatesNavigation.click();
 		waitElementToAppear(certificatesScreenName);
 	}

@@ -14,13 +14,13 @@ public class UserDashboard extends AbstractComponent{
 		PageFactory.initElements(driver, this);
 	}
 	
-	@FindBy(xpath = "//a[@href=/user']")
+	@FindBy(xpath = "//a[@href='/user']")
 	WebElement dashboardNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='Welcome back!']")
 	WebElement dashboardScreenName;
 
-	public void goToCategory() {
+	public void goToUserDashboard() {
 		dashboardNavigation.click();
 		waitElementToAppear(dashboardScreenName);
 	}

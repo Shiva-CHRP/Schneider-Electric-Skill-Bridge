@@ -15,13 +15,13 @@ public class MyGroup extends AbstractComponent{
 		
 	}
 	
-	@FindBy(xpath = "//a[@href=/trainer/groups']")
+	@FindBy(xpath = "//a[@href='/trainer/groups']")
 	WebElement groupsNavigation;
 
 	@FindBy(xpath = "//h2[normalize-space()='My Groups']")
 	WebElement groupScreenName;
 
-	public void goToCategory() {
+	public void goToMyGroup() {
 		groupsNavigation.click();
 		waitElementToAppear(groupScreenName);
 	}
