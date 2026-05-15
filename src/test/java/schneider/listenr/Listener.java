@@ -23,11 +23,11 @@ public class Listener extends BaseTest implements ITestListener {
 	@Override
 	public void onTestSuccess(ITestResult result) {
 		test.get().pass("Test Passed");
-		String testName = result.getMethod().getMethodName();
+		//String testName = result.getMethod().getMethodName();
 
-		String path = ScreenshotUtils.getScreenshot(driver,testName);
+		//String path = ScreenshotUtils.getScreenshot(driver,testName);
 
-		test.get().addScreenCaptureFromPath(path);
+		//test.get().addScreenCaptureFromPath(path);
 	}
 
 	@Override

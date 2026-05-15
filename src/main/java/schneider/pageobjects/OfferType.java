@@ -12,16 +12,20 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import schneider.abstractcomponent.AbstractComponent;
+import schneider.utils.ToastResponse;
+import schneider.utils.ToastUtils;
 import schneider.utils.WaitUtils;
 
 public class OfferType extends AbstractComponent {
 	WebDriver driver;
 	WaitUtils waitUtils;
+	ToastUtils toastUtils;
 
 	public OfferType(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
 		this.waitUtils = new WaitUtils(driver);
+		toastUtils = new ToastUtils(driver);
 		PageFactory.initElements(driver, this);
 	}
 
@@ -104,7 +108,14 @@ public class OfferType extends AbstractComponent {
 
 		waitUtils.waitForInvisibility(offerRow);
 	}
+	
+	public ToastResponse captureToast() {
+	    return toastUtils.captureToast();
+	}
 
+	public void waitForToastToDisappear() {
+	    toastUtils.waitForToastToDisappear();
+	}
 	/*
 	 * public WebElement waitForToast() {
 	 * 

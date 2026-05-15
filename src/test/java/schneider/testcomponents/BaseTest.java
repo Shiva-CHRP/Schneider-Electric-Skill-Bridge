@@ -2,6 +2,7 @@ package schneider.testcomponents;
 
 import java.io.IOException;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
@@ -55,6 +56,8 @@ import schneider.pageobjects.user.UserFeedback;
 import schneider.utils.ConfigReader;
 import schneider.utils.ExtentReportNG;
 import schneider.utils.ExtentTestManager;
+import schneider.utils.ToastResponse;
+import schneider.utils.ToastUtils;
 import schneider.utils.WebDriverFactory;
 
 public class BaseTest {
@@ -62,8 +65,8 @@ public class BaseTest {
 	protected static ExtentReports extent = ExtentReportNG.getInstance();
 	protected SoftAssert softAssert;
 	public WebDriver driver;
-	
-    protected ExtentTest test;
+	public ToastUtils toastUtils;
+	protected ExtentTest test;
 	WebDriverFactory factory;
 
 	// Page Objects
@@ -175,16 +178,23 @@ public class BaseTest {
 		userFeedback = new UserFeedback(driver);
 	}
 
+	public void assertToast(ToastResponse toast, String expectedMessage, String expectedType) {
+
+		Assert.assertEquals(toast.getMessage(), expectedMessage);
+		Assert.assertEquals(toast.getType(), expectedType);
+	}
+
 	@BeforeMethod(alwaysRun = true)
 	public void setUup() throws IOException {
 		factory = new WebDriverFactory();
 		driver = factory.initializeDriver();
 		extent = ExtentReportNG.getInstance();
-        test = extent.createTest("Test Execution");
+		test = extent.createTest("Test Execution");
 		ExtentTestManager.setTest(test);
 		initializePageObjects();
 		initializeTrainerPageObjects();
 		initializeUserPageObjects();
+		toastUtils = new ToastUtils(driver);
 		driver.get(ConfigReader.getUrl());
 		softAssert = new SoftAssert();
 	}

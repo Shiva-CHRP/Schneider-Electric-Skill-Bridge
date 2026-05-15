@@ -10,12 +10,14 @@ import schneider.listenr.Listener;
 import schneider.testcomponents.BaseTest;
 import schneider.utils.ConfigReader;
 import schneider.utils.TestDataUtil;
+import schneider.utils.ToastResponse;
 import schneider.utils.ToastUtils;
 
 @Listeners(Listener.class)
 public class LoginTestValidations extends BaseTest {
 
 	String offerTypeName = "Panels - Test8";
+	String categoryName = "Panels Category";
 	String toastType;
 	String toastMessage;
 	String username = ConfigReader.getUsername();
@@ -73,35 +75,65 @@ public class LoginTestValidations extends BaseTest {
 		loginPage.dashboardName();
 	}
 
-	@Test(priority = 6)
+	@Test  (priority = 6)
 	public void verify_Offer_Creation_And_Delete() throws InterruptedException {
 		loginPage.login(username, password);
 		offerType.goToOfferTypePage();
 		offerType.createOfferType(offerTypeName);
 		offerType.createOffer();
-		ToastUtils toast = new ToastUtils(driver);
-		toastType = toast.getToastType();
-		toastMessage = toast.getToastMessage();
+		ToastResponse toast = toastUtils.captureToast();
+		String toastType = toast.getType();
+		String toastMessage = toast.getMessage();
 		if ("success".equalsIgnoreCase(toastType)) {
 
-			softAssert.assertEquals("Offer Type created successfully!", toastMessage, "Success toast mismatch");
+			softAssert.assertEquals(toastMessage, "Offer Type created successfully!", "Success toast mismatch");
 			softAssert.assertTrue(offerType.isOfferPresentInList("Offer Type", offerTypeName),
 					"Offer not found in listing screen");
 
 		} else if ("error".equalsIgnoreCase(toastType)) {
 
-			softAssert.assertEquals("Business Group '" + offerTypeName + "' already exists", toastMessage,
+			softAssert.assertEquals(toastMessage, "Business Group '" + offerTypeName + "' already exists",
 					"Error toast mismatch");
 
 		} else {
 
 			softAssert.fail("Toast not displayed or locator not matching UI");
 		}
+
+		toastUtils.waitForToastToDisappear();
+		category.goToCategory();
+		category.createCategory(categoryName);
+		category.selectOfferType(offerTypeName);
+		category.saveCategory();
+		ToastResponse toast2 = category.captureToast();
+		String toastType2 = toast2.getType();
+		String toastMessage2 = toast2.getMessage();
+		if ("success".equalsIgnoreCase(toastType2)) {
+
+			softAssert.assertEquals(toastMessage2, "Category created successfully!", "Success toast mismatch");
+			softAssert.assertTrue(category.isCategoryPresentInList("Category", categoryName),
+					"Category not found in listing screen");
+
+		} else if ("error".equalsIgnoreCase(toastType2)) {
+
+			softAssert.assertEquals(toastMessage2,
+					"Offer type '" + categoryName + "' already exists in this business group", "Error toast mismatch");
+
+		} else {
+
+			softAssert.fail("Toast not displayed or locator not matching UI");
+		}
+		toastUtils.waitForToastToDisappear();
+
+		offerType.goToOfferTypePage();
 		offerType.deleteOffer(offerTypeName);
+		ToastResponse toast3 = toastUtils.captureToast();
+		ToastAssertions.assertToastSuccess(toast3, offerTypeName + " deleted permanently",
+				"Delete Success toast mismatch");
 		offerType.waitForOfferToDisappear(offerTypeName);
-		ToastAssertions.assertToastSuccess(toast, offerTypeName + " deleted permanently");
 		softAssert.assertFalse(offerType.isOfferPresentInList("Offer Type", offerTypeName),
 				"Deleted offer still present in listing");
+
 		softAssert.assertAll();
 
 	}

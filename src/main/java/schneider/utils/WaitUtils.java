@@ -40,6 +40,11 @@ public class WaitUtils {
 
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
+	
+	public void waitForClickable(By locator) {
+
+		wait.until(ExpectedConditions.elementToBeClickable(locator));
+	}
 
 	// INVISIBILITY
 	public void waitForInvisibility(WebElement element) {
@@ -88,22 +93,14 @@ public class WaitUtils {
 
 	public static void waitForPageLoad(WebDriver driver) {
 
-		try {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
-            WebDriverWait wait =
-                    new WebDriverWait(driver, Duration.ofSeconds(10));
-
-            wait.until(webDriver ->
-                    ((JavascriptExecutor) webDriver)
-                            .executeScript("return document.readyState")
-                            .equals("complete"));
-
-            // Small UI stabilization wait
-            Thread.sleep(1000);
-
-        } catch (Exception e) {
-
-            System.out.println("Page load wait skipped");
-        }
+	    wait.until(webDriver ->
+	        ((JavascriptExecutor) webDriver)
+	            .executeScript("return document.readyState")
+	            .equals("complete")
+	    );
 	}
+
+	
 }

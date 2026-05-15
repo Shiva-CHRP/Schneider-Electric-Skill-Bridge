@@ -6,19 +6,21 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+
+import schneider.utils.ToastUtils;
 import schneider.utils.WaitUtils;
 
 public class AbstractComponent {
 
 	protected WebDriver driver;
 	protected WaitUtils waitUtils;
-
+	public ToastUtils toastUtils;
 	public AbstractComponent(WebDriver driver) {
 
 		this.driver = driver;
 
 		this.waitUtils = new WaitUtils(driver);
-
+		toastUtils = new ToastUtils(driver);
 		PageFactory.initElements(driver, this);
 	}
 
@@ -32,15 +34,18 @@ public class AbstractComponent {
 
 		waitUtils.waitForClickable(element);
 	}
+	public void waitElementToBeClickable(By locator) {
 
+		waitUtils.waitForClickable(locator);
+	}
 	public void waitForElementToDisappear(WebElement element) {
 
 		waitUtils.waitForInvisibility(element);
 	}
 	
-	public void waitForVisibility(By locator) {
+	public WebElement waitForVisibility(By locator) {
 
-		waitUtils.waitForVisibility(locator);
+		return waitUtils.waitForVisibility(locator);
 	}
 	public void waitForVisibility(WebElement element) {
 
@@ -110,5 +115,8 @@ public class AbstractComponent {
 
 		driver.findElement(addBtn).click();
 	}
+	
+	
+	
 
 }
