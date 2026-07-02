@@ -1,1 +1,29 @@
-/target/
+# Maven
+target/
+
+# TestNG
+test-output/
+
+# Reports
+reports/
+allure-results/
+allure-report/
+
+# Logs
+logs/
+*.log
+
+# Screenshots
+screenshots/
+
+# IDE
+.idea/
+.settings/
+.project
+.classpath
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
