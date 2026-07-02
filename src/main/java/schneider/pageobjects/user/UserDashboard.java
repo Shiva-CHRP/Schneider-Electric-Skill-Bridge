@@ -17,7 +17,7 @@ public class UserDashboard extends AbstractComponent{
 	@FindBy(xpath = "//a[@href='/user']")
 	WebElement dashboardNavigation;
 
-	@FindBy(xpath = "//h2[normalize-space()='Welcome back!']")
+	@FindBy(xpath = "//h2[normalize-space()='Dashboard']")
 	WebElement dashboardScreenName;
 
 	public void goToUserDashboard() {

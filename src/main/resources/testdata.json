@@ -6,7 +6,7 @@
       "expectedUsernameError": "Email is required"
     },
     "emptyPassword": {
-      "username": "admin@example.com",
+      "username": "shrinivas@se.com",
       "password": "",
       "expectedPasswordError": "Password is required"
     },

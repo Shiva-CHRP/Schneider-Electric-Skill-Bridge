@@ -3,8 +3,10 @@ package schneider.testcomponents;
 import java.io.IOException;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.asserts.SoftAssert;
@@ -112,10 +114,18 @@ public class BaseTest {
 	public UserCertificates userCertificates;
 	public UserFeedback userFeedback;
 
-	@BeforeSuite
-	public void setup() throws IOException {
-
+	@BeforeClass(alwaysRun = true)
+	public void setup() throws IOException, InterruptedException {
+		factory = new WebDriverFactory();
 		extent = ExtentReportNG.getInstance();
+		test = extent.createTest("Test Execution");
+		ExtentTestManager.setTest(test);
+		driver = factory.initializeDriver();		
+		driver.get(ConfigReader.getUrl());			
+		initializePageObjects();
+		initializeTrainerPageObjects();
+		initializeUserPageObjects();
+		
 	}
 
 	public void initializePageObjects() {
@@ -183,32 +193,20 @@ public class BaseTest {
 		Assert.assertEquals(toast.getMessage(), expectedMessage);
 		Assert.assertEquals(toast.getType(), expectedType);
 	}
-
+	
 	@BeforeMethod(alwaysRun = true)
-	public void setUup() throws IOException {
-		factory = new WebDriverFactory();
-		driver = factory.initializeDriver();
-		extent = ExtentReportNG.getInstance();
-		test = extent.createTest("Test Execution");
-		ExtentTestManager.setTest(test);
-		initializePageObjects();
-		initializeTrainerPageObjects();
-		initializeUserPageObjects();
+	public void setUp() {
+	
 		toastUtils = new ToastUtils(driver);
-		driver.get(ConfigReader.getUrl());
 		softAssert = new SoftAssert();
 	}
 
-	@AfterMethod(alwaysRun = true)
-	public void tearDown() {
-		WebDriverFactory.quitDriver();
-		ExtentTestManager.unload();
-	}
-
-	@AfterSuite
+	@AfterClass(alwaysRun = true)
 	public void tearDownSuite() {
-
-		// softAssert = null;
+		if (driver != null) {
+			WebDriverFactory.quitDriver();
+		}
+		ExtentTestManager.unload();
 		extent.flush();
 	}
 

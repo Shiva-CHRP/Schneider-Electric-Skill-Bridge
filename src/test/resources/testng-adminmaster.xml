@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+	<listeners>
+		<listener class-name="schneider.listenr.Listener" />
+	</listeners>
+	<test thread-count="5" name="Admin Test">
+		<groups>
+			<run>
+				<include name="offer_creation"></include>
+				<include name="category_creation"></include>
+				<include name="subcategory_creation"></include>
+				<include name="deletion"></include>
+				<include name="department_creation"></include>
+			</run>
+		</groups>
+		<classes>
+			<class name="schneider.tests.AdminMasterModuleTest"></class>
+		</classes>
+	</test> <!--
+	Test -->
+
+</suite> <!--
+Suite -->

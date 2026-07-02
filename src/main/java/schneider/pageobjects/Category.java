@@ -76,7 +76,7 @@ public class Category extends AbstractComponent {
 	        } catch (Exception ignored) {}
 
 	        try {
-	            Thread.sleep(300);
+	            Thread.sleep(1000);
 	        } catch (InterruptedException e) {}
 	    }
 	    if (element == null) {
@@ -85,7 +85,7 @@ public class Category extends AbstractComponent {
 	    
 	    ((JavascriptExecutor) driver)
         .executeScript("arguments[0].scrollIntoView(true);", element);
-	    try { Thread.sleep(300); } catch (Exception ignored) {}
+	    try { Thread.sleep(1000); } catch (Exception ignored) {}
 	    ((JavascriptExecutor) driver)
         .executeScript("arguments[0].click();", element);
 	}

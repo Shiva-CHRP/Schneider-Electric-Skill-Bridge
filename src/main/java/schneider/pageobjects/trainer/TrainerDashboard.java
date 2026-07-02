@@ -18,7 +18,7 @@ public class TrainerDashboard extends AbstractComponent{
 	@FindBy(xpath = "//a[@href='/trainer']")
 	WebElement tDashboardNavigation;
 
-	@FindBy(xpath = "//h2[normalize-space()='Trainer Dashboard']")
+	@FindBy(xpath = "//h2[normalize-space()='Dashboard']")
 	WebElement tDashboardScreenName;
 
 	public void goToTrainerDashboard() {

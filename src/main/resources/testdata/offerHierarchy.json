@@ -1,0 +1,28 @@
+[
+  {
+    "offerName": "Offer1",
+    "categories": [
+      {
+        "categoryName": "Category1",
+        "subCategories": ["Subcategory1", "Subcategory2"]
+      },
+      {
+        "categoryName": "Category2",
+        "subCategories": ["Subcategory3", "Subcategory4"]
+      }
+    ]
+  },
+  {
+      "offerName": "Offer2",
+      "categories": [
+        {
+          "categoryName": "Category3",
+          "subCategories": ["Subcategory5", "Subcategory6"]
+        },
+        {
+          "categoryName": "Category4",
+          "subCategories": ["Subcategory7", "Subcategory8"]
+        }
+      ]
+    }
+]

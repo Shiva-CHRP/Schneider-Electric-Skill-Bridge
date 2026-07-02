@@ -1,0 +1,15 @@
+[
+  {
+    "zoneName": "Zone1",
+    "clusters": [
+      {
+        "clusterName": "Cluster1",
+        "countries": ["Country1"]
+      },
+      {
+        "clusterName": "Cluster2",
+        "countries": ["Country3", "Country4"]
+      }
+    ]
+  }
+]

@@ -11,7 +11,7 @@ import schneider.utils.ScreenshotUtils;
 import schneider.utils.StepNameUtil;
 import schneider.utils.WaitUtils;
 
-public class SeleniumListener implements WebDriverListener  {
+public class SeleniumListener implements WebDriverListener {
 
 	WebDriver driver;
 
@@ -19,37 +19,31 @@ public class SeleniumListener implements WebDriverListener  {
 		this.driver = driver;
 	}
 
-	 private void log(String stepName) {
-		 try {
+	private void log(String stepName) {
+		try {
 			WaitUtils.waitForPageLoad(driver);
-			 //String stepName = StepNameUtil.getStepName();
-			    ExtentTestManager.getTest().pass(stepName,
-			            MediaEntityBuilder.createScreenCaptureFromPath(ScreenshotUtils.getScreenshot(driver,stepName))
-			            .build());
-		 } catch (Exception e) {
+			// String stepName = StepNameUtil.getStepName();
+			ExtentTestManager.getTest().pass(stepName, MediaEntityBuilder
+					.createScreenCaptureFromPath(ScreenshotUtils.getScreenshot(driver, stepName)).build());
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		 }
-	    }
+		}
+	}
 
-	
+	@Override
+	public void afterClick(WebElement element) {
+		log(StepNameUtil.getStepName());
+	}
 
-    @Override
-    public void afterClick(WebElement element) {
-        log(StepNameUtil.getStepName());
-    }
+	@Override
+	public void afterSendKeys(WebElement element, CharSequence... keysToSend) {
+		log(StepNameUtil.getStepName());
+	}
 
-   
-
-    @Override
-    public void afterSendKeys(WebElement element, CharSequence... keysToSend) {
-        log(StepNameUtil.getStepName());
-    }
-
-    
-
-    @Override
-    public void afterGet(WebDriver driver,String url) {
-        log(StepNameUtil.getStepName());
-    }
+	@Override
+	public void afterGet(WebDriver driver, String url) {
+		WaitUtils.waitForPageLoad(driver);
+		log(StepNameUtil.getStepName());
+	}
 }

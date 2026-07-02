@@ -92,7 +92,10 @@ public class WaitUtils {
 	}
 
 	public static void waitForPageLoad(WebDriver driver) {
-
+		
+		if (driver == null) {
+	        return;
+	    }
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
 	    wait.until(webDriver ->

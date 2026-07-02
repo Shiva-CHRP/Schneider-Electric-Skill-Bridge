@@ -55,7 +55,10 @@ public class OfferType extends AbstractComponent {
 	public void createOffer() {
 		offerSave.click();
 	}
-
+	
+	public String getOfferByName(String offerName) {
+	    return driver.findElement(By.xpath("//td[text()='" + offerName + "']")).getText();
+	}
 	public int getColumnIndex(String columnName) {
 
 		List<WebElement> headers = driver.findElements(By.xpath("//table//thead//th"));
