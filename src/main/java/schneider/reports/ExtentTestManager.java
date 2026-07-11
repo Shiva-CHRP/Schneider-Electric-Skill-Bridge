@@ -1,4 +1,4 @@
-package schneider.utils;
+package schneider.reports;
 
 import com.aventstack.extentreports.ExtentTest;
 

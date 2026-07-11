@@ -1,14 +1,12 @@
 [
   {
-    "zoneName": "Zone1",
+    "zoneName": "MEA",
     "clusters": [
       {
-        "clusterName": "Cluster1",
-        "countries": ["Country1"]
-      },
-      {
-        "clusterName": "Cluster2",
-        "countries": ["Country3", "Country4"]
+        "clusterName": "Gulf",
+        "countries": [
+          "Qatar"
+        ]
       }
     ]
   }

@@ -1,5 +1,6 @@
 package schneider.pageobjects;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -10,8 +11,11 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import schneider.abstractcomponent.AbstractComponent;
+import schneider.annotations.StepName;
 import schneider.utils.ToastResponse;
 import schneider.utils.WaitUtils;
 
@@ -39,11 +43,17 @@ public class Category extends AbstractComponent {
 	@FindBy(xpath = "//button[normalize-space()='Save']")
 	WebElement saveCategory;
 
+//	@FindBy(xpath = "//button[.//*[contains(@class,'lucide-chevron-right')]]")
+//	private List<WebElement> nextButton;
+	private By nextButton = By.xpath("//button[.//*[contains(@class,'lucide-chevron-right')]]");
+
+	@StepName("Navigated to the Category screen")
 	public void goToCategory() {
 		categoryNavigation.click();
 		waitElementToAppear(categoryScreenName);
 	}
 
+	@StepName("Click on the Add Button for Creating a new Category")
 	public void createCategory(String Name) {
 		clickAddButton();
 		waitElementToAppear(categoryName);
@@ -51,75 +61,134 @@ public class Category extends AbstractComponent {
 
 	}
 
+	@StepName("Select the Offer Type from the Offer Type Dropdown")
 	public void selectOfferType(String offerName) {
 		// waitElementToBeClickable(offerTypeDropdown);
 		offerTypeDropdown.click();
 
-		waitUtils.waitForVisibility(
-	            By.cssSelector("button[aria-expanded='true']")
-	    );
-		
+		waitUtils.waitForVisibility(By.cssSelector("button[aria-expanded='true']"));
+
 		By options = By.cssSelector("[cmdk-item]");
-	    waitUtils.waitForVisibility(options);
-	    //System.out.println(driver.findElements(By.cssSelector("[cmdk-item]")).size());
-	    By target = By.xpath(
-	            "//div[@cmdk-item and @data-value='" + offerName + "']"
-	    );
-	    WebElement element = null;
-	    for (int i = 0; i < 10; i++) {
-	        try {
-	            element = driver.findElement(target);
+		waitUtils.waitForVisibility(options);
+		// System.out.println(driver.findElements(By.cssSelector("[cmdk-item]")).size());
+		By target = By.xpath("//div[@cmdk-item and @data-value='" + offerName + "']");
+		WebElement element = null;
+		for (int i = 0; i < 10; i++) {
+			try {
+				element = driver.findElement(target);
 
-	            if (element.isDisplayed() && element.isEnabled()) {
-	                break;
-	            }
-	        } catch (Exception ignored) {}
+				if (element.isDisplayed() && element.isEnabled()) {
+					break;
+				}
+			} catch (Exception ignored) {
+			}
 
-	        try {
-	            Thread.sleep(1000);
-	        } catch (InterruptedException e) {}
-	    }
-	    if (element == null) {
-	        throw new RuntimeException("Offer Type not found: " + offerName);
-	    }
-	    
-	    ((JavascriptExecutor) driver)
-        .executeScript("arguments[0].scrollIntoView(true);", element);
-	    try { Thread.sleep(1000); } catch (Exception ignored) {}
-	    ((JavascriptExecutor) driver)
-        .executeScript("arguments[0].click();", element);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+			}
+		}
+		if (element == null) {
+			throw new RuntimeException("Offer Type not found: " + offerName);
+		}
+
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+		try {
+			Thread.sleep(1000);
+		} catch (Exception ignored) {
+		}
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
 	}
 
+	@StepName("Created a new Category")
 	public void saveCategory() {
 		saveCategory.click();
 	}
 
 	public int getColumnIndex(String columnName) {
 
-		List<WebElement> headers = driver.findElements(By.xpath("//table//thead//th"));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+		By headersLocator = By.xpath("//table//thead//th");
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(headersLocator));
+
+		List<WebElement> headers = driver.findElements(headersLocator);
 
 		for (int i = 0; i < headers.size(); i++) {
 
-			String headerText = headers.get(i).getText().trim();
-
-			if (headerText.equalsIgnoreCase(columnName)) {
+			if (headers.get(i).getText().trim().equalsIgnoreCase(columnName)) {
 				return i + 1;
 			}
 		}
 
-		return -1;
+		throw new RuntimeException("Column not found: " + columnName);
 	}
 
+	@StepName("Verified the Category is present in the list")
 	public boolean isCategoryPresentInList(String columnName, String expectedValue) {
+		search(expectedValue);
 
-		int columnIndex = getColumnIndex("Category");
+		if (!driver.findElements(By.xpath("//*[contains(text(),'No data found')]")).isEmpty()) {
+			return false;
+		}
+
+		int columnIndex = getColumnIndex(columnName);
 
 		List<WebElement> rows = driver.findElements(By.xpath("//table//tbody//tr/td[" + columnIndex + "]"));
 
 		return rows.stream().map(WebElement::getText).map(String::trim)
-				.anyMatch(value -> value.equalsIgnoreCase(expectedValue));
+				.anyMatch(text -> text.equalsIgnoreCase(expectedValue));
 	}
 
+	@StepName("Retrieved the Category from the list")
+	public String getCategoryFromList(String columnName, String expectedValue) {
+		search(expectedValue);
+
+		if (!driver.findElements(By.xpath("//table//tbody//td[contains(text(),'No data found')]")).isEmpty()) {
+			return null;
+		}
+
+		int columnIndex = getColumnIndex(columnName);
+
+		List<WebElement> categories = driver.findElements(By.xpath("//table//tbody//tr/td[" + columnIndex + "]"));
+
+		for (WebElement category : categories) {
+
+			String actualCategory = category.getText().trim();
+
+			if (actualCategory.equalsIgnoreCase(expectedValue)) {
+				return actualCategory.replaceAll("\\s+", " ");
+			}
+		}
+
+		return null;
+	}
+
+	@StepName("Navigated to the first page of the Category list")
+	public void goToFirstPage() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		while (true) {
+
+			List<WebElement> previousButtons = driver.findElements(
+					By.xpath("//button//*[name()='svg' and contains(@class,'chevron-left')]/parent::button"));
+
+			if (previousButtons.isEmpty()) {
+				break;
+			}
+
+			WebElement previous = previousButtons.get(0);
+
+			if (previous.isEnabled()) {
+				previous.click();
+				wait.until(ExpectedConditions.stalenessOf(previous));
+			} else {
+				break;
+			}
+		}
+	}
+
+	@StepName("Opened the Category for editing")
 	public void clickEditCategory(String category) {
 
 		By editButton = By.xpath("//tr[td[normalize-space()='" + category + "']]//button[@title='Edit']");
@@ -127,6 +196,7 @@ public class Category extends AbstractComponent {
 		driver.findElement(editButton).click();
 	}
 
+	@StepName("Deleted the Category")
 	public void deleteCategory(String category) {
 
 		By rowDeleteButton = By.xpath("//tr[td[normalize-space()='" + category + "']]//button[@title='Delete']");
@@ -146,13 +216,13 @@ public class Category extends AbstractComponent {
 
 		waitUtils.waitForInvisibility(offerRow);
 	}
-	
+
 	public ToastResponse captureToast() {
-	    return toastUtils.captureToast();
+		return toastUtils.captureToast();
 	}
 
 	public void waitForToastToDisappear() {
-	    toastUtils.waitForToastToDisappear();
+		toastUtils.waitForToastToDisappear();
 	}
 
 }

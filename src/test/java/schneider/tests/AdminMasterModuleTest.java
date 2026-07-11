@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 
 import com.google.gson.stream.JsonReader;
 
+import schneider.annotations.TestInfo;
 import schneider.assertions.ToastAssertions;
 import schneider.listenr.Listener;
 import schneider.pojo.CategoryData;
@@ -26,26 +27,32 @@ public class AdminMasterModuleTest extends BaseTest {
 	String offerTypeName;
 	String categoryName;
 	String subCategoryName;
-	String departmentName="Test Department";
+	String departmentName = "Test Department";
 	String toastType;
 	String toastMessage;
 	String username = ConfigReader.getUsername();
 	String password = ConfigReader.getPassword();
 
-	/*
-	 * @Test(priority = 1) public void validate_Login_To_The_Admin_Portal() throws
-	 * InterruptedException { loginPage.login(username, password); }
-	 */
-
-	@BeforeMethod(alwaysRun = true)
-	public void login() throws InterruptedException {
-		if (!isUserLoggedIn()) {
-			loginPage.login(username, password);
-		}
-
+	@Test(priority = 1)
+	@TestInfo(module = "Login", description = "Login using valid Email and Password", priority = "Critical")
+	public void validate_Login_To_The_Admin_Portal() throws InterruptedException {
+		//loginPage.login(username, password);
+		loginPage.enterUsername(TestDataUtil.getData("loginValidation.validLogin.username"));
+		loginPage.enterPassword(TestDataUtil.getData("loginValidation.validLogin.password"));
+		loginPage.clickLogin();
+		loginPage.dashboardName();
 	}
 
-	@Test(priority = 2, groups = "offer_creation", dataProvider = "offerHierarchy")
+//	@BeforeMethod(alwaysRun = true)
+//	public void login() throws InterruptedException {
+//		if (!isUserLoggedIn()) {
+//			loginPage.login(username, password);
+//		}
+//
+//	}
+
+	@Test(priority = 2, groups = {"offer_creation", "Regression"}, dataProvider = "offerHierarchy")
+	@TestInfo(module = "Offer", description = "Verify Offer Creation with Valid Data", priority = "Critical")
 	public void verify_Offer_Creation(OfferData data) {
 
 		offerTypeName = data.getOfferName();
@@ -77,7 +84,8 @@ public class AdminMasterModuleTest extends BaseTest {
 
 	}
 
-	@Test(priority = 3, groups = "category_creation", dataProvider = "offerHierarchy")
+	@Test(priority = 3, groups = {"category_creation","Regression"}, dataProvider = "offerHierarchy")
+	@TestInfo(module = "Category", description = "Verify Category Creation with Valid Data", priority = "Critical")
 	public void verify_Category_Creation(OfferData data) {
 
 		offerType.goToOfferTypePage();
@@ -114,7 +122,8 @@ public class AdminMasterModuleTest extends BaseTest {
 
 	}
 
-	@Test(priority = 4, groups = "subcategory_creation", dataProvider = "offerHierarchy")
+	@Test(priority = 4, groups = {"subcategory_creation","Regression"}, dataProvider = "offerHierarchy")
+	@TestInfo(module = "Sub Category", description = "Verify Sub Category Creation with Valid Data", priority = "Critical")
 	public void verify_Sub_Category_Creation(OfferData data) {
 		offerType.goToOfferTypePage();
 		offerTypeName = data.getOfferName();
@@ -156,9 +165,10 @@ public class AdminMasterModuleTest extends BaseTest {
 
 	}
 
-	@Test(priority = 5, groups = "deletion", dataProvider = "offerHierarchy")
+	@Test(priority = 5, groups = {"deletion", "Regression"}, dataProvider = "offerHierarchy")
+	@TestInfo(module = "Offer", description = "Verify Offer Deletion", priority = "Critical")
 	public void verify_Offer_Deletion(OfferData offer) {
-		
+
 		offerTypeName = offer.getOfferName();
 		offerType.goToOfferTypePage();
 		offerType.deleteOffer(offerTypeName);
@@ -171,13 +181,14 @@ public class AdminMasterModuleTest extends BaseTest {
 
 		softAssert.assertAll();
 	}
-	
-	@Test(priority = 6, groups = "department_creation")
+
+	@Test(priority = 6, groups = {"department_creation", "Smoke"})
+	@TestInfo(module = "Department", description = "Verify Department Creation with Valid Data", priority = "Critical")
 	public void verify_Department_Creation() {
 
 		department.goToDepartment();
 		department.createDepartment(departmentName);
-		department.createDepartment();
+		department.saveDepartment();
 		ToastResponse toast = toastUtils.captureToast();
 		String toastType = toast.getType();
 		String toastMessage = toast.getMessage();
@@ -189,8 +200,8 @@ public class AdminMasterModuleTest extends BaseTest {
 
 		} else if ("error".equalsIgnoreCase(toastType)) {
 
-			softAssert.assertEquals(toastMessage, "Department '"+departmentName+"' already exists in this organisation",
-					"Error toast mismatch");
+			softAssert.assertEquals(toastMessage,
+					"Department '" + departmentName + "' already exists in this organisation", "Error toast mismatch");
 
 		} else {
 
@@ -200,10 +211,7 @@ public class AdminMasterModuleTest extends BaseTest {
 		toastUtils.waitForToastToDisappear();
 
 	}
-	
-	
-	
-	
+
 	public void ensureOfferTypeExists(String offerTypeName) {
 
 		offerType.goToOfferTypePage();

@@ -6,8 +6,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import schneider.abstractcomponent.AbstractComponent;
+import schneider.annotations.StepName;
 import schneider.utils.ScreenshotUtils;
-import schneider.utils.StepName;
 
 public class Dashboard extends AbstractComponent{
 

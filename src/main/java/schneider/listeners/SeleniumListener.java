@@ -6,7 +6,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.events.WebDriverListener;
 import com.aventstack.extentreports.MediaEntityBuilder;
 
-import schneider.utils.ExtentTestManager;
+import schneider.reports.ExtentTestManager;
 import schneider.utils.ScreenshotUtils;
 import schneider.utils.StepNameUtil;
 import schneider.utils.WaitUtils;
@@ -16,7 +16,7 @@ public class SeleniumListener implements WebDriverListener {
 	WebDriver driver;
 
 	public SeleniumListener() {
-		this.driver = driver;
+		//this.driver = driver;
 	}
 
 	private void log(String stepName) {
@@ -26,7 +26,7 @@ public class SeleniumListener implements WebDriverListener {
 			ExtentTestManager.getTest().pass(stepName, MediaEntityBuilder
 					.createScreenCaptureFromPath(ScreenshotUtils.getScreenshot(driver, stepName)).build());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
@@ -43,7 +43,8 @@ public class SeleniumListener implements WebDriverListener {
 
 	@Override
 	public void afterGet(WebDriver driver, String url) {
-		WaitUtils.waitForPageLoad(driver);
-		log(StepNameUtil.getStepName());
+		this.driver = driver;
+//		WaitUtils.waitForPageLoad(driver);
+//		log(StepNameUtil.getStepName());
 	}
 }

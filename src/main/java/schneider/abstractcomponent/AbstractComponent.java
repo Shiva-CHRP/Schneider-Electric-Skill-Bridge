@@ -1,11 +1,16 @@
 package schneider.abstractcomponent;
 
+import java.time.Duration;
+import java.util.List;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import schneider.utils.ToastUtils;
 import schneider.utils.WaitUtils;
@@ -15,6 +20,7 @@ public class AbstractComponent {
 	protected WebDriver driver;
 	protected WaitUtils waitUtils;
 	public ToastUtils toastUtils;
+
 	public AbstractComponent(WebDriver driver) {
 
 		this.driver = driver;
@@ -34,24 +40,27 @@ public class AbstractComponent {
 
 		waitUtils.waitForClickable(element);
 	}
+
 	public void waitElementToBeClickable(By locator) {
 
 		waitUtils.waitForClickable(locator);
 	}
+
 	public void waitForElementToDisappear(WebElement element) {
 
 		waitUtils.waitForInvisibility(element);
 	}
-	
+
 	public WebElement waitForVisibility(By locator) {
 
 		return waitUtils.waitForVisibility(locator);
 	}
+
 	public void waitForVisibility(WebElement element) {
 
 		waitUtils.waitForVisibility(element);
 	}
-	
+
 	// Drop Downs
 	public void selectByVisibleText(WebElement element, String text) {
 
@@ -109,14 +118,34 @@ public class AbstractComponent {
 		}
 	}
 
-	protected By addBtn = By.xpath("//div[@title='Add']");
+	// protected By addBtn = By.xpath("//div[@title='Add']");
 
 	public void clickAddButton() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebElement addBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@title='Add']")));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", addBtn);
 
-		driver.findElement(addBtn).click();
+		wait.until(ExpectedConditions.elementToBeClickable(addBtn));
+
+		addBtn.click();
 	}
-	
-	
-	
+
+	public void search(String value) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+	    By searchBox = By.xpath("//input[contains(translate(@placeholder,'SEARCH','search'),'search')]");
+	    By rows = By.xpath("//table//tbody//tr");
+	    By noData = By.xpath("//table//tbody//td[contains(text(),'No data found')]");
+
+	    WebElement field = wait.until(ExpectedConditions.elementToBeClickable(searchBox));
+
+	    field.clear();
+	    field.sendKeys(value);
+
+	    // Wait until either rows are displayed or "No data found" appears
+	    wait.until(driver ->
+	            !driver.findElements(rows).isEmpty() ||
+	            !driver.findElements(noData).isEmpty());
+	}
 
 }

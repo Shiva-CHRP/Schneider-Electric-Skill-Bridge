@@ -1,6 +1,7 @@
 package schneider.utils;
 
 import java.time.Duration;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -34,7 +35,11 @@ public class WaitUtils {
 
 		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 	}
+	
+	public void waitForVisibility(List<WebElement> element) {
 
+		wait.until(ExpectedConditions.visibilityOfAllElements(element));
+	}
 	// CLICKABLE
 	public void waitForClickable(WebElement element) {
 

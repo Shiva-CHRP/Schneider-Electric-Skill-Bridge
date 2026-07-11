@@ -1,6 +1,8 @@
 package schneider.testcomponents;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -55,9 +57,9 @@ import schneider.pageobjects.user.UserCourseLibrary;
 import schneider.pageobjects.user.UserDashboard;
 import schneider.pageobjects.user.UserEvents;
 import schneider.pageobjects.user.UserFeedback;
+import schneider.reports.ExtentReportNG;
+import schneider.reports.ExtentTestManager;
 import schneider.utils.ConfigReader;
-import schneider.utils.ExtentReportNG;
-import schneider.utils.ExtentTestManager;
 import schneider.utils.ToastResponse;
 import schneider.utils.ToastUtils;
 import schneider.utils.WebDriverFactory;
@@ -118,8 +120,8 @@ public class BaseTest {
 	public void setup() throws IOException, InterruptedException {
 		factory = new WebDriverFactory();
 		extent = ExtentReportNG.getInstance();
-		test = extent.createTest("Test Execution");
-		ExtentTestManager.setTest(test);
+		//test = extent.createTest("Test Execution");
+		//ExtentTestManager.setTest(test);
 		driver = factory.initializeDriver();		
 		driver.get(ConfigReader.getUrl());			
 		initializePageObjects();
@@ -195,10 +197,12 @@ public class BaseTest {
 	}
 	
 	@BeforeMethod(alwaysRun = true)
-	public void setUp() {
+	public void setUp(Method method)  {
 	
 		toastUtils = new ToastUtils(driver);
 		softAssert = new SoftAssert();
+//		 test = extent.createTest(method.getName());
+//		    ExtentTestManager.setTest(test);
 	}
 
 	@AfterClass(alwaysRun = true)

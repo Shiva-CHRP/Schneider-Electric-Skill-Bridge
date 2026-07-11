@@ -1,0 +1,178 @@
+ {
+    "userType": {
+      "SEEmployee": {
+        "fields": {
+          "personalInformation": {
+            "SESAID": {
+              "type": "text",
+              "required": true
+            },
+            "FirstName": {
+              "type": "text",
+              "required": true
+            },
+            "LastName": {
+              "type": "text",
+              "required": true
+            },
+            "Email": {
+              "type": "email",
+              "required": true
+            },
+            "UserRole": {
+              "type": "dropdown",
+              "required": true
+            }
+          },
+          "organizationCategory": {
+            "Department": {
+              "type": "dropdown",
+              "required": true
+            },
+            "OfferType": {
+              "type": "dropdown",
+              "required": true
+            },
+            "Category": {
+              "type": "dropdown",
+              "required": true
+            },
+            "SubCategory": {
+              "type": "dropdown",
+              "required": true
+            }
+          },
+          "location": {
+            "Country": {
+              "type": "dropdown",
+              "required": true
+            },
+            "Cluster": {
+              "type": "dropdown",
+              "required": true
+            },
+            "Zone": {
+              "type": "dropdown",
+              "required": true
+            }
+          }
+        }
+      },
+      "Partner": {
+        "fields": {
+          "personalInformation": {
+            "Partner": {
+              "type": "dropdown",
+              "required": true
+            },
+            "BFOID": {
+              "type": "text",
+              "required": true
+            },
+            "FirstName": {
+              "type": "text",
+              "required": true
+            },
+            "LastName": {
+              "type": "text",
+              "required": true
+            },
+            "Email": {
+              "type": "email",
+              "required": true
+            },
+            "UserRole": {
+              "type": "text",
+              "required": true
+            }
+          },
+          "organizationCategory": {
+            "OfferType": {
+              "type": "dropdown",
+              "required": true
+            },
+            "Category": {
+              "type": "dropdown",
+              "required": true
+            },
+            "SubCategory": {
+              "type": "dropdown",
+              "required": true
+            }
+          },
+          "location": {
+            "Country": {
+              "type": "dropdown",
+              "required": true
+            },
+            "Cluster": {
+              "type": "dropdown",
+              "required": true
+            },
+            "Zone": {
+              "type": "dropdown",
+              "required": true
+            }
+          }
+        }
+      },
+      "Other": {
+        "fields": {
+          "personalInformation": {
+            "EmployeeCode": {
+              "type": "text",
+              "required": true
+            },
+            "FirstName": {
+              "type": "text",
+              "required": true
+            },
+            "LastName": {
+              "type": "text",
+              "required": true
+            },
+            "Email": {
+              "type": "email",
+              "required": true
+            },
+            "UserRole": {
+              "type": "dropdown",
+              "required": true
+            }
+          },
+          "organizationCategory": {
+            "Department": {
+              "type": "dropdown",
+              "required": true
+            },
+            "OfferType": {
+              "type": "dropdown",
+              "required": true
+            },
+            "Category": {
+              "type": "dropdown",
+              "required": true
+            },
+            "SubCategory": {
+              "type": "dropdown",
+              "required": true
+            }
+          },
+          "location": {
+            "Country": {
+              "type": "dropdown",
+              "required": true
+            },
+            "Cluster": {
+              "type": "dropdown",
+              "required": true
+            },
+            "Zone": {
+              "type": "dropdown",
+              "required": true
+            }
+          }
+        }
+      }
+    }
+  }

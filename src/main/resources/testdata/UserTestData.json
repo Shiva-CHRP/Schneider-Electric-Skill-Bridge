@@ -1,0 +1,34 @@
+{
+	"userType":{
+		
+		"SE Employee": {
+		    "personalInformation": {
+		      "SESAID": "64434367",
+		      "FirstName": "John",
+		      "LastName": "Smith",
+		      "Email": "john.smith3@test.com",
+		      "UserRole": "User"
+		    }
+		  },
+		  "Partner": {
+		    "personalInformation": {
+		      "Partner": "ABC Partner",
+		      "BFOID": "BFO12345",
+		      "FirstName": "David",
+		      "LastName": "Brown",
+		      "Email": "david@test.com",
+		      "UserRole": "User"
+		    }
+		  },
+		  "Other": {
+		    "personalInformation": {
+		      "EmployeeCode": "EMP001",
+		      "FirstName": "Mike",
+		      "LastName": "Taylor",
+		      "Email": "mike@test.com",
+		      "UserRole": "User"
+		    }
+		  }
+	}
+  
+}

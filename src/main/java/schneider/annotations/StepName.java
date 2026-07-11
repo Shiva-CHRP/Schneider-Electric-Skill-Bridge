@@ -1,4 +1,4 @@
-package schneider.utils;
+package schneider.annotations;
 
 import java.lang.annotation.*;
 

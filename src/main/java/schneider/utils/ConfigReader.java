@@ -21,6 +21,17 @@ public class ConfigReader {
 			throw new RuntimeException("Failed to load config file: " + path, e);
 		}
 	}
+	
+	static {
+
+		try {
+			prop.load(new FileInputStream("src/main/resources/testdata/config.properties"));
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+	}
 
 	// Get property by key
 	public static String get(String key) {

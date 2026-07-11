@@ -2,40 +2,54 @@ package schneider.utils;
 
 import java.lang.reflect.Method;
 
+import schneider.annotations.StepName;
+
 public class StepNameUtil {
 
-	public static String getStepName() {
+	private static final ThreadLocal<String> dynamicStep = new ThreadLocal<>();
 
-		
-		StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+    public static void setStepName(String stepName) {
+        dynamicStep.set(stepName);
+    }
 
-		try {
+    public static void clearStepName() {
+        dynamicStep.remove();
+    }
 
-			for (StackTraceElement element : stack) {
+    public static String getStepName() {
 
-				String className = element.getClassName();
+        // Return dynamic step if available
+        if (dynamicStep.get() != null) {
+            return dynamicStep.get();
+        }
 
-				if (className.contains("pageobjects")) {
+        StackTraceElement[] stack = Thread.currentThread().getStackTrace();
 
-					Class<?> clazz = Class.forName(className);
+        try {
 
-					for (Method method : clazz.getDeclaredMethods()) {
+            for (StackTraceElement element : stack) {
 
-						if (method.getName().equals(element.getMethodName())) {
+                String className = element.getClassName();
 
-							if (method.isAnnotationPresent(StepName.class)) {
+                if (className.contains("pageobjects")) {
 
-								return method.getAnnotation(StepName.class).value();
-							}
-						}
-					}
-				}
-			}
+                    Class<?> clazz = Class.forName(className);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+                    for (Method method : clazz.getDeclaredMethods()) {
 
-		return "Executing Step";
-	}
+                        if (method.getName().equals(element.getMethodName())
+                                && method.isAnnotationPresent(StepName.class)) {
+
+                            return method.getAnnotation(StepName.class).value();
+                        }
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "Executing Step";
+    }
 }

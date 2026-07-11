@@ -44,13 +44,16 @@ public class WebDriverFactory {
         SeleniumListener listener = new SeleniumListener();
         EventFiringDecorator<WebDriver> decorator =
                 new EventFiringDecorator<>(listener);
-
+        
+        WebDriver decoratedDriver = decorator.decorate(driver.get());
+        driver.set(decoratedDriver);
        
         getDriver().manage().window().maximize();
 
         getDriver().manage().timeouts()
                 .implicitlyWait(Duration.ofSeconds(2));
-        return decorator.decorate(driver.get());
+        return decoratedDriver;
+        //return decorator.decorate(driver.get());
         //return getDriver();
     }
 
