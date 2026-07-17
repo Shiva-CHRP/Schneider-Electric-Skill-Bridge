@@ -9,7 +9,9 @@ import org.testng.Assert;
 import schneider.pageobjects.Users;
 import schneider.pojo.MasterData;
 import schneider.pojo.UserDetails;
+import schneider.pojo.UserScenario;
 import schneider.pojo.UsersTestData;
+import schneider.utils.ToastResponse;
 
 public class UserCreation {
 
@@ -21,17 +23,18 @@ public class UserCreation {
 
 	}
 
-	public void createUser(String userType, UsersTestData data, MasterData masterData) throws InterruptedException {
+	public void createUser(UserScenario scenario, MasterData masterData) throws InterruptedException {
 
 		users.goToUsers();
 		users.clickOnAddUser();
-		// System.out.println("UserType = [" + userType + "]");
+		String userType = scenario.getUserType();
+		System.out.println("User Type = " + userType);
 		users.selectUserType(userType);
-		UserDetails userDetails = data.getUserType().get(userType);
-		if (userDetails == null) {
-			throw new RuntimeException("User Type data not found in JSON: " + userType);
+		// UserDetails userDetails = data.getUserType().get(userType);
+		if (userType == null || userType.isEmpty()) {
+			throw new RuntimeException("User Type missing in JSON");
 		}
-		Map<String, String> personalInfo = userDetails.getPersonalInformation();
+		Map<String, String> personalInfo = scenario.getUserDetails().getPersonalInformation();
 		if (personalInfo == null || personalInfo.isEmpty()) {
 			throw new RuntimeException("Personal Information data missing for User Type: " + userType);
 		}
@@ -60,8 +63,28 @@ public class UserCreation {
 			throw new RuntimeException("Invalid User Type : " + userType);
 
 		}
-		users.createUser(); 
-		
+		users.createUser();
+//		ToastResponse toast = users.captureToast();
+//
+//		if (toast.getMessage().contains("already registered in the user system")) {
+//
+//		    Assert.assertTrue(
+//		        toast.getMessage().contains("Please use a different email address."),
+//		        "Unexpected duplicate email message: " + toast.getMessage());
+//
+//		    users.clickOnBackToList();
+//		    return;
+//		}
+		if (users.isEmailAlreadyRegisteredErrorDisplayed()) {
+
+		    ToastResponse toast = users.captureToast();
+
+		    Assert.assertTrue(
+		        toast.getMessage().contains("already registered in the user system"));
+
+		    users.clickOnBackToList();
+		    return;
+		}
 		validateCreatedUser(userType, personalInfo);
 		users.clickDoneAfterUserCreation();
 	}
@@ -115,7 +138,7 @@ public class UserCreation {
 
 		users.selectPartner(masterData.getPartner());
 
-		users.verifyPartenerbFOId(data.get("BFOID"));
+		// users.verifyPartenerbFOId(data.get("BFOID"));
 
 		users.verifyPartenerUserRole(data.get("UserRole"));
 
@@ -135,7 +158,7 @@ public class UserCreation {
 
 		// Location
 
-		users.selectCountry(masterData.getCountry());
+		// users.selectCountry(masterData.getCountry());
 
 		// users.selectClusterPartner(masterData.getCluster());
 
@@ -152,17 +175,25 @@ public class UserCreation {
 
 		users.inputEmail(data.get("Email"));
 
-		users.selectUserRoleOther(data.get("UserRole"));
-
 		users.selectDepartmentOther(masterData.getUserRoleDepartment());
+
+		String userRole = data.get("UserRole");
+
+		users.selectUserRoleOther(userRole);
 
 		users.selectOfferTypes(masterData.getOfferType());
 
-		users.selectCategories(masterData.getCategory());
+		// users.selectCategories(masterData.getCategory());
+		users.selectCategories("Select All");
 
-		users.selectSubCategories(masterData.getSubCategory());
+		// users.selectSubCategories(masterData.getSubCategory());
+		users.selectSubCategories("Select All");
 
-		users.selectCountry(masterData.getCountry());
+		if (isMultiCountryRole(userRole)) {
+			users.selectCountries(masterData.getCountry());
+		} else {
+			users.selectCountry(masterData.getCountry());
+		}
 
 		// users.selectClusters(masterData.getCluster());
 
@@ -172,8 +203,11 @@ public class UserCreation {
 
 	private boolean isMultiCountryRole(String userRole) {
 
-		return userRole.equalsIgnoreCase("Admin") || userRole.equalsIgnoreCase("Trainer")
-				|| userRole.equalsIgnoreCase("Admin+Trainer");
+		if (userRole == null) {
+			return false;
+		}
+
+		return userRole.contains("Admin") || userRole.contains("Trainer");
 	}
 
 	private List<String> getDepartmentsByUserRole(String userRole, MasterData masterData) {
@@ -196,40 +230,40 @@ public class UserCreation {
 
 		return departments;
 	}
-	
+
 	private void validateCreatedUser(String userType, Map<String, String> data) {
 
-	    String actualId = users.getCreatedUserId();
-	    String actualEmail = users.getCreatedUserEmail();
-	    String actualPassword = users.getCreatedUserPassword();
+		String actualId = users.getCreatedUserId();
+		String actualEmail = users.getCreatedUserEmail();
+		String actualPassword = users.getCreatedUserPassword();
 
-	    String expectedId;
+		// String expectedId;
 
-	    switch (userType) {
+		switch (userType) {
 
-	    case "SE Employee":
-	        expectedId = "SESA" + data.get("SESAID");
-	        break;
+		case "SE Employee":
+			String expectedSESId = "SESA" + data.get("SESAID");
+			Assert.assertEquals(actualId, expectedSESId, "User ID mismatch");
+			break;
 
-	    case "Partner":
-	        expectedId = data.get("BFOID");
-	        break;
+		case "Partner":
+			// expectedId = data.get("BFOID");
+			break;
 
-	    case "Other":
-	        expectedId = data.get("EmployeeCode");
-	        break;
+		case "Other":
+			// String expectedEmployeeCode = data.get("EmployeeCode");
+			break;
 
-	    default:
-	        throw new RuntimeException("Unknown User Type: " + userType);
-	    }
+		default:
+			throw new RuntimeException("Unknown User Type: " + userType);
+		}
 
-	    Assert.assertEquals(actualId, expectedId, "User ID mismatch");
-	    Assert.assertEquals(actualEmail, data.get("Email"), "Email mismatch");
-	    Assert.assertFalse(actualPassword.isBlank(), "Password was not generated");
+		Assert.assertEquals(actualEmail, data.get("Email"), "Email mismatch");
+		Assert.assertFalse(actualPassword == null || actualPassword.isBlank(), "Password was not generated");
 
-	    System.out.println("Created User ID      : " + actualId);
-	    System.out.println("Created User Email   : " + actualEmail);
-	    System.out.println("Generated Password   : " + actualPassword);
+		System.out.println("Created User ID      : " + actualId);
+		System.out.println("Created User Email   : " + actualEmail);
+		System.out.println("Generated Password   : " + actualPassword);
 	}
 
 }

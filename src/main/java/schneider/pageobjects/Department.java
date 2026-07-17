@@ -97,7 +97,7 @@ public class Department extends AbstractComponent {
 				.anyMatch(text -> text.equalsIgnoreCase(expectedValue));
 	}
 
-	@StepName("Retrieved the Department from the Offer list")
+	@StepName("Retrieved the Department from the Department list")
 	public String getDepartmentFromList(String columnName, String expectedValue) {
 		search(expectedValue);
 

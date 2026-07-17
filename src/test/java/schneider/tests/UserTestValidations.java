@@ -16,6 +16,7 @@ import schneider.pojo.DepartmentData;
 import schneider.pojo.MasterData;
 import schneider.pojo.OfferData;
 import schneider.pojo.PartnerData;
+import schneider.pojo.UserScenario;
 import schneider.pojo.UsersTestData;
 import schneider.pojo.ZoneData;
 import schneider.testcomponents.BaseTest;
@@ -39,7 +40,7 @@ public class UserTestValidations extends BaseTest {
 	String actualPartner;
 
 	@Test(priority = 1, groups = { "Smoke", "Regression" })
-	@TestInfo(module = "Login", description = "Login using valid Email and Password", priority = "Critical")
+	@TestInfo(module = "Login", description = "Verify successful login using a valid email address and password.", priority = "Critical")
 	public void validate_Login_To_The_Admin_Portal() throws InterruptedException {
 		loginPage.enterUsername(TestDataUtil.getData("loginValidation.validLogin.username"));
 		loginPage.enterPassword(TestDataUtil.getData("loginValidation.validLogin.password"));
@@ -48,7 +49,7 @@ public class UserTestValidations extends BaseTest {
 	}
 
 	@Test(priority = 2, groups = "Smoke")
-	@TestInfo(module = "User", description = "Navigation to the Users Management Screen", priority = "Medium")
+	@TestInfo(module = "User", description = "Verify navigation to the User Management screen.", priority = "Medium")
 	public void navigate_to_Users() {
 
 		users.goToUsers();
@@ -57,7 +58,7 @@ public class UserTestValidations extends BaseTest {
 	}
 
 	@Test(priority = 3, dataProvider = "offerHierarchy", groups = { "Smoke", "Regression" })
-	@TestInfo(module = "Master", description = "Getting the Offer Type data from Offer Type Master", priority = "Medium")
+	@TestInfo(module = "Master", description = "Verify whether the Offer Type exists in the Offer Type Master; if not found, create a new Offer Type.", priority = "Medium")
 	public void get_the_Offer(OfferData data) {
 		offerType.goToOfferTypePage();
 		offerType.goToFirstPage();
@@ -73,7 +74,7 @@ public class UserTestValidations extends BaseTest {
 			offerType.goToFirstPage();
 			actualOfferType = offerType.getOfferTypeFromList("Offer Type", expectedOfferType);
 			Assert.assertNotNull(actualOfferType, "Offer Type creation failed: " + expectedOfferType);
-			//masterData.setOfferType(expectedOfferType);
+			// masterData.setOfferType(expectedOfferType);
 
 		} else {
 
@@ -85,7 +86,7 @@ public class UserTestValidations extends BaseTest {
 	}
 
 	@Test(priority = 4, dataProvider = "offerHierarchy", groups = { "Smoke", "Regression" })
-	@TestInfo(module = "Master", description = "Getting the Category data from Category Master", priority = "Medium")
+	@TestInfo(module = "Master", description = "Verify whether the Category exists in the Category Master; if not found, create a new Category.", priority = "Medium")
 	public void get_the_Category(OfferData data) {
 		offerType.goToOfferTypePage();
 		actualOfferType = data.getOfferName();
@@ -110,13 +111,13 @@ public class UserTestValidations extends BaseTest {
 
 				Assert.assertEquals(actualCategory, ecpectedCategoryName);
 			}
-			//masterData.setCategory(ecpectedCategoryName);
+			// masterData.setCategory(ecpectedCategoryName);
 
 		}
 	}
 
 	@Test(priority = 5, dataProvider = "offerHierarchy", groups = { "Smoke", "Regression" })
-	@TestInfo(module = "Master", description = "Getting the Sub Category data from Sub Category Master", priority = "Medium")
+	@TestInfo(module = "Master", description = "Verify whether the Sub Category exists in the Sub Category Master; if not found, create a new Sub Category.", priority = "Medium")
 	public void get_the_Sub_Category(OfferData data) {
 		offerType.goToOfferTypePage();
 		actualOfferType = data.getOfferName();
@@ -145,29 +146,26 @@ public class UserTestValidations extends BaseTest {
 
 					Assert.assertEquals(actualSubCategory, expectedSubCategoryName);
 				}
-				//masterData.setSubCategory(expectedSubCategoryName);
+				// masterData.setSubCategory(expectedSubCategoryName);
 
 			}
 		}
 	}
 
 	@Test(priority = 6, dataProvider = "departmentHierarchy", groups = { "Smoke", "Regression" })
-	@TestInfo(module = "Master", description = "Getting the Department data from Department Master", priority = "Medium")
+	@TestInfo(module = "Master", description = "Verify whether the Department exists in the Department Master; if not found, create a new Department.", priority = "Medium")
 	public void get_the_Department(DepartmentData data) {
 		department.goToDepartment();
-		actualUserRoleDepartment =
-	            createDepartmentIfNotExists(data.getUserRoleDepartment());
+		actualUserRoleDepartment = createDepartmentIfNotExists(data.getUserRoleDepartment());
 
-	    actualTrainerRoleDepartment =
-	            createDepartmentIfNotExists(data.getTrainerRoleDepartment());
+		actualTrainerRoleDepartment = createDepartmentIfNotExists(data.getTrainerRoleDepartment());
 
-	    actualAdminRoleDepartment =
-	            createDepartmentIfNotExists(data.getAdminRoleDepartment());
+		actualAdminRoleDepartment = createDepartmentIfNotExists(data.getAdminRoleDepartment());
 
 	}
 
 	@Test(priority = 7, dataProvider = "zoneHierarchy", groups = { "Smoke", "Regression" })
-	@TestInfo(module = "Master", description = "Getting the Zones data from Zone Master", priority = "Medium")
+	@TestInfo(module = "Master", description = "Verify whether the Zone exists in the Zone Master; if not found, create a new Zone.", priority = "Medium")
 	public void get_the_Zone(ZoneData data) {
 		zone.goToZone();
 		zone.goToFirstPage();
@@ -187,12 +185,12 @@ public class UserTestValidations extends BaseTest {
 
 			Assert.assertEquals(actualZone, expectedZone);
 		}
-		//masterData.setZone(expectedZone);
+		// masterData.setZone(expectedZone);
 
 	}
 
 	@Test(priority = 8, dataProvider = "zoneHierarchy", groups = { "Smoke", "Regression" })
-	@TestInfo(module = "Master", description = "Getting the Cluster data from Cluster Master", priority = "Medium")
+	@TestInfo(module = "Master", description = "Verify whether the Cluster exists in the Cluster Master; if not found, create a new Cluster.", priority = "Medium")
 	public void get_the_Cluster(ZoneData data) {
 		zone.goToZone();
 		actualZone = data.getZoneName();
@@ -215,12 +213,12 @@ public class UserTestValidations extends BaseTest {
 
 				Assert.assertEquals(actualCluster, ecpectedClusterName);
 			}
-			//masterData.setCluster(ecpectedClusterName);
+			// masterData.setCluster(ecpectedClusterName);
 		}
 	}
 
 	@Test(priority = 9, dataProvider = "zoneHierarchy", groups = { "Smoke", "Regression" })
-	@TestInfo(module = "Master", description = "Getting the Country data from Country Master", priority = "Medium")
+	@TestInfo(module = "Master", description = "Verify whether the Country exists in the Country Master; if not found, create a new Country.", priority = "Medium")
 	public void get_the_Country(ZoneData data) {
 		zone.goToZone();
 		actualZone = data.getZoneName();
@@ -247,13 +245,13 @@ public class UserTestValidations extends BaseTest {
 
 					Assert.assertEquals(actualCountry, expectedCountryName);
 				}
-				//masterData.setCountry(expectedCountryName);
+				// masterData.setCountry(expectedCountryName);
 			}
 		}
 	}
 
 	@Test(priority = 10, dataProvider = "partnerHierarchy", groups = { "Smoke", "Regression" })
-	@TestInfo(module = "Master", description = "Getting the Partner data from Partner Master", priority = "Medium")
+	@TestInfo(module = "Master", description = "Verify whether the Partner exists in the Partner Master; if not found, create a new Partner.", priority = "Medium")
 	public void get_the_Partner(PartnerData data) {
 		partner.goToPartner();
 		String expectedPartner = data.getPartnerName();
@@ -276,12 +274,12 @@ public class UserTestValidations extends BaseTest {
 
 			Assert.assertEquals(actualPartner, expectedPartner);
 		}
-		//masterData.setPartner(expectedPartner);
+		// masterData.setPartner(expectedPartner);
 	}
 
 	@Test(priority = 11, dependsOnMethods = { "get_the_Offer", "get_the_Category", "get_the_Sub_Category",
 			"get_the_Department", "get_the_Zone", "get_the_Cluster", "get_the_Country", "get_the_Partner" })
-	@TestInfo(module = "Master", description = "Preparing required fields masters data for Creating Users", priority = "Critical")
+	@TestInfo(module = "Master", description = "Verify the availability of the required master data and create it if it does not exist before creating users.", priority = "Critical")
 	public void prepareUserMasterData() {
 
 		masterData = new MasterData();
@@ -293,9 +291,9 @@ public class UserTestValidations extends BaseTest {
 		masterData.setSubCategory(actualSubCategory);
 
 		masterData.setUserRoleDepartment(actualUserRoleDepartment);
-		
+
 		masterData.setTrainerRoleDepartment(actualTrainerRoleDepartment);
-		
+
 		masterData.setAdminRoleDepartment(actualAdminRoleDepartment);
 
 		masterData.setZone(actualZone);
@@ -308,14 +306,22 @@ public class UserTestValidations extends BaseTest {
 
 	}
 
-	@Test(priority = 12, dataProvider = "userTestData", groups = { "Smoke", "Regression" })
-	@TestInfo(module = "User", description = "Create User based on User Type", priority = "Critical")
-	public void create_user(UsersTestData data) throws InterruptedException {
+	@Test(priority = 12, groups = { "Smoke", "Regression" })
+	@TestInfo(module = "User", description = "Verify the successful creation of an SE Employee user with the User role when valid SESA ID, personal details, email address, organization, category, and location are provided", priority = "Critical")
+	public void verifySEAdminUserCreation() throws InterruptedException {
 
 		UserCreation userCreation = new UserCreation(users);
 
-		userCreation.createUser("SE Employee", data, masterData);
+		UserScenario scenario = getScenario("SE_User");
 
+		userCreation.createUser(scenario, masterData);
+
+	}
+	
+	@Test(priority = 13, groups = { "Smoke", "Regression" })
+	@TestInfo(module = "Login", description = "Validate successful user logout and redirection to the Login screen.", priority = "Critical")
+	public void validateLogoutFromApplication() {
+		loginPage.clickLogOut();
 	}
 
 	public void ensureOfferTypeExists(String offerTypeName) {
@@ -461,34 +467,51 @@ public class UserTestValidations extends BaseTest {
 
 		UsersTestData data = TestDataUtil.getUserTestData(path);
 
-		return new Object[][] { { data } };
+		return data.getUserScenarios().entrySet().stream()
+				.map(entry -> new Object[] { entry.getKey(), entry.getValue() }).toArray(Object[][]::new);
 	}
-	
+
 	private String createDepartmentIfNotExists(String departmentName) {
 
-	    department.goToFirstPage();
+		department.goToFirstPage();
 
-	    String actualDepartment = department.getDepartmentFromList("Department Name", departmentName);
+		String actualDepartment = department.getDepartmentFromList("Department Name", departmentName);
 
-	    if (actualDepartment == null) {
+		if (actualDepartment == null) {
 
-	        department.createDepartment(departmentName);
-	        department.saveDepartment();
+			department.createDepartment(departmentName);
+			department.saveDepartment();
 
-	        department.goToDepartment();
-	        department.goToFirstPage();
+			department.goToDepartment();
+			department.goToFirstPage();
 
-	        actualDepartment = department.getDepartmentFromList("Department Name", departmentName);
+			actualDepartment = department.getDepartmentFromList("Department Name", departmentName);
 
-	        Assert.assertNotNull(actualDepartment,
-	                "Department creation failed: " + departmentName);
+			Assert.assertNotNull(actualDepartment, "Department creation failed: " + departmentName);
 
-	    } else {
+		} else {
 
-	        System.out.println("Department already exists: " + actualDepartment);
-	        Assert.assertEquals(actualDepartment, departmentName);
-	    }
+			System.out.println("Department already exists: " + actualDepartment);
+			Assert.assertEquals(actualDepartment, departmentName);
+		}
 
-	    return actualDepartment;
+		return actualDepartment;
 	}
+
+	private UserScenario getScenario(String scenarioName) {
+
+		String path = System.getProperty("user.dir") + "/src/main/resources/testdata/UserTestData.json";
+
+		UsersTestData data = TestDataUtil.getUserTestData(path);
+
+		UserScenario scenario = data.getUserScenarios().get(scenarioName);
+
+		if (scenario == null) {
+			throw new RuntimeException("Scenario not found in JSON : " + scenarioName);
+		}
+
+		return scenario;
+
+	}
+
 }

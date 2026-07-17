@@ -12,6 +12,7 @@
 		</groups>
 		<classes>
 			<class name="schneider.tests.LoginTestValidations"></class>
+			<class name="schneider.tests.UserTestValidations"></class>
 		</classes>
 	</test> <!--
 	Test -->

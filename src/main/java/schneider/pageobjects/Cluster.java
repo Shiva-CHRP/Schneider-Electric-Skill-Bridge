@@ -134,7 +134,7 @@ public class Cluster extends AbstractComponent {
 				.anyMatch(text -> text.equalsIgnoreCase(expectedValue));
 	}
 
-	@StepName("Retrieved the Cluster from the Offer list")
+	@StepName("Retrieved the Cluster from the Custer list")
 	public String getClusterFromList(String columnName, String expectedValue) {
 		search(expectedValue);
 

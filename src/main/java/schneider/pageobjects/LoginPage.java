@@ -30,6 +30,9 @@ public class LoginPage extends AbstractComponent {
 	@FindBy(xpath = "//button[@type='submit']")
 	WebElement signinButton;
 	
+	@FindBy(xpath = "//button[.//span[normalize-space()='Logout']]")
+	WebElement logoutButton;
+	
 	@FindBy(xpath = "//h2[normalize-space()='Dashboard']")
 	WebElement dashboardName;
 	
@@ -85,6 +88,13 @@ public class LoginPage extends AbstractComponent {
 	public void clickLogin() {
 		signinButton.click();		
     }
+	
+	@StepName("Click on the Logout Button")
+	public void clickLogOut() {
+		logoutButton.click();
+		waitForVisibility(emailAddress);
+    }
+	
 	
 	public void dashboardName() {
 		waitElementToAppear(dashboardName);

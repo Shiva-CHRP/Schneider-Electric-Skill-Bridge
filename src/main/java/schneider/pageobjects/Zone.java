@@ -97,7 +97,7 @@ public class Zone extends AbstractComponent {
 				.anyMatch(text -> text.equalsIgnoreCase(expectedValue));
 	}
 
-	@StepName("Retrieved the Zone from the Offer list")
+	@StepName("Retrieved the Zone from the Zone list")
 	public String getZoneFromList(String columnName, String expectedValue) {
 		search(expectedValue);
 

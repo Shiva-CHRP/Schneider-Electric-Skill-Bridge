@@ -47,7 +47,7 @@ public class Partner extends AbstractComponent {
 	@FindBy(xpath = "//button[normalize-space()='Save']")
 	WebElement savePartner;
 
-	@StepName("Navigated to the Department screen")
+	@StepName("Navigated to the Partner screen")
 	public void goToPartner() {
 		partnerNavigation.click();
 		waitElementToAppear(partnerScreenName);

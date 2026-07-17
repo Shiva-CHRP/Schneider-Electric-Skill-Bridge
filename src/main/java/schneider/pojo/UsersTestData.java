@@ -4,18 +4,16 @@ import java.util.Map;
 
 public class UsersTestData {
 
-	private Map<String, UserDetails> userType;
+	private Map<String, UserScenario> userScenarios;
 
-	public Map<String, UserDetails> getUserType() {
-
-		return userType;
-
+	public Map<String, UserScenario> getUserScenarios() {
+		return userScenarios;
 	}
 
-	public void setUserType(Map<String, UserDetails> userType) {
-
-		this.userType = userType;
-
+	public void setUserScenarios(Map<String, UserScenario> userScenarios) {
+		this.userScenarios = userScenarios;
 	}
+
+	
 
 }

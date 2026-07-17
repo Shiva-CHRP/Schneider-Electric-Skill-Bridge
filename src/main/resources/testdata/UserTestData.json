@@ -1,34 +1,156 @@
 {
-	"userType":{
-		
-		"SE Employee": {
-		    "personalInformation": {
-		      "SESAID": "64434367",
-		      "FirstName": "John",
-		      "LastName": "Smith",
-		      "Email": "john.smith3@test.com",
-		      "UserRole": "User"
-		    }
-		  },
-		  "Partner": {
-		    "personalInformation": {
-		      "Partner": "ABC Partner",
-		      "BFOID": "BFO12345",
-		      "FirstName": "David",
-		      "LastName": "Brown",
-		      "Email": "david@test.com",
-		      "UserRole": "User"
-		    }
-		  },
-		  "Other": {
-		    "personalInformation": {
-		      "EmployeeCode": "EMP001",
-		      "FirstName": "Mike",
-		      "LastName": "Taylor",
-		      "Email": "mike@test.com",
-		      "UserRole": "User"
-		    }
-		  }
-	}
-  
+  "userScenarios": {
+
+    "SE_Admin": {
+      "userType": "SE Employee",
+      "userDetails": {
+        "personalInformation": {
+          "SESAID": "64434367",
+          "FirstName": "John",
+          "LastName": "Smith",
+          "Email": "john.admin@test.com",
+          "UserRole": "Admin"
+        },
+        "organizationCategory": {},
+        "location": {}
+      }
+    },
+
+    "SE_Trainer": {
+      "userType": "SE Employee",
+      "userDetails": {
+        "personalInformation": {
+          "SESAID": "64434368",
+          "FirstName": "John",
+          "LastName": "Smith",
+          "Email": "john.trainer@test.com",
+          "UserRole": "Trainer"
+        },
+        "organizationCategory": {},
+        "location": {}
+      }
+    },
+
+    "SE_User": {
+      "userType": "SE Employee",
+      "userDetails": {
+        "personalInformation": {
+          "SESAID": "34565432",
+          "FirstName": "David",
+          "LastName": "Smithy",
+          "Email": "david.user@test.com",
+          "UserRole": "User"
+        },
+        "organizationCategory": {},
+        "location": {}
+      }
+    },
+
+    "SE_Admin_Trainer": {
+      "userType": "SE Employee",
+      "userDetails": {
+        "personalInformation": {
+          "SESAID": "64434370",
+          "FirstName": "John",
+          "LastName": "Smith",
+          "Email": "john.admintrainer@test.com",
+          "UserRole": "Admin+Trainer"
+        },
+        "organizationCategory": {},
+        "location": {}
+      }
+    },
+
+    "SE_Admin_User": {
+      "userType": "SE Employee",
+      "userDetails": {
+        "personalInformation": {
+          "SESAID": "64434371",
+          "FirstName": "John",
+          "LastName": "Smith",
+          "Email": "john.adminuser@test.com",
+          "UserRole": "Admin+User"
+        },
+        "organizationCategory": {},
+        "location": {}
+      }
+    },
+
+    "SE_Trainer_User": {
+      "userType": "SE Employee",
+      "userDetails": {
+        "personalInformation": {
+          "SESAID": "64434372",
+          "FirstName": "John",
+          "LastName": "Smith",
+          "Email": "john.traineruser@test.com",
+          "UserRole": "Trainer+User"
+        },
+        "organizationCategory": {},
+        "location": {}
+      }
+    },
+
+    "SE_Admin_Trainer_User": {
+      "userType": "SE Employee",
+      "userDetails": {
+        "personalInformation": {
+          "SESAID": "64434373",
+          "FirstName": "John",
+          "LastName": "Smith",
+          "Email": "john.admintraineruser@test.com",
+          "UserRole": "Admin+Trainer+User"
+        },
+        "organizationCategory": {},
+        "location": {}
+      }
+    },
+
+    "Partner": {
+      "userType": "Partner",
+      "userDetails": {
+        "personalInformation": {
+          "Partner": "Adani Switchgear Pvt Ltd",
+          "BFOID": "94783583858587",
+          "FirstName": "Rahul",
+          "LastName": "David",
+          "Email": "drahul.partner@test.com",
+          "UserRole": "User"
+        },
+        "organizationCategory": {},
+        "location": {}
+      }
+    },
+
+    "Other_Trainer": {
+      "userType": "Other",
+      "userDetails": {
+        "personalInformation": {
+          "EmployeeCode": "EMP001",
+          "FirstName": "Mike",
+          "LastName": "Taylor",
+          "Email": "mike.trainer@test.com",
+          "UserRole": "Trainer"
+        },
+        "organizationCategory": {},
+        "location": {}
+      }
+    },
+
+    "Other_User": {
+      "userType": "Other",
+      "userDetails": {
+        "personalInformation": {
+          "EmployeeCode": "EMP000003",
+          "FirstName": "Mike",
+          "LastName": "Taylor",
+          "Email": "taylor.user@test.com",
+          "UserRole": "User"
+        },
+        "organizationCategory": {},
+        "location": {}
+      }
+    }
+
+  }
 }
