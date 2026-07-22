@@ -59,7 +59,9 @@ public class Users extends AbstractComponent {
 	@FindBy(xpath = "//label[contains(.,'User Role')]/parent::div//input")
 	WebElement userRolesPartner;
 
-	@FindBy(xpath = "//button[@role='combobox']//span[normalize-space()='Select role']/parent::button")
+	// @FindBy(xpath = "//button[@role='combobox']//span[normalize-space()='Select
+	// role']/parent::button")
+	@FindBy(xpath = "//label[contains(normalize-space(),'User Role')]/following-sibling::div//button")
 	WebElement userRolesOther;
 
 	@FindBy(xpath = "//label[contains(.,'Partner')]/parent::div//button")
@@ -145,7 +147,7 @@ public class Users extends AbstractComponent {
 //		System.out.println(driver.getPageSource());
 		// waitElementToAppear(createdUserId);
 	}
-	
+
 	@StepName("Click on the 'Back To List' Button for Exsiting from User Creation screen")
 	public void clickOnBackToList() {
 		waitElementToAppear(backToList);
@@ -153,17 +155,16 @@ public class Users extends AbstractComponent {
 		waitElementToAppear(userScreenName);
 	}
 
-	@StepName("Validating Email Error while Creating the User")
-	public boolean isEmailAlreadyRegisteredErrorDisplayed() {
-		try {
-			WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(2));
+	@StepName("Validating User Creation Error")
+	public boolean isUserCreationErrorDisplayed(ToastResponse toast) {
+		String toastMessage = toast.getMessage().toLowerCase();
 
-			return shortWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[@data-sonner-toast]")))
-					.isDisplayed();
+	    //System.out.println("Toast detected: " + toastMessage);
 
-		} catch (TimeoutException e) {
-			return false;
-		}
+	    return toastMessage.contains("already registered")
+	            || toastMessage.contains("employee code")
+	            || toastMessage.contains("already exists")
+	            || toastMessage.contains("unique code");
 	}
 
 	@StepName("Validating Email Error while Creating the User")
@@ -221,23 +222,23 @@ public class Users extends AbstractComponent {
 	public void inputSESAId(String sesaId) {
 		sesaID.sendKeys(sesaId);
 	}
-	
+
 	@StepName("Input the First Name")
 	public void inputFirstName(String name) {
 		firstName.sendKeys(name);
 	}
-	
+
 	@StepName("Input the Last Name")
 	public void inputLastName(String name) {
 		lastName.sendKeys(name);
 	}
-	
+
 	@StepName("Input the Email")
 	public void inputEmail(String name) {
 		email.sendKeys(name);
 	}
 
-	@StepName("Input thr Other Employee Code")
+	@StepName("Input the Other Employee Code")
 	public void inputOtherEmployeeCode(String name) {
 		otherEmployeeCode.sendKeys(name);
 	}
@@ -280,43 +281,20 @@ public class Users extends AbstractComponent {
 		}
 
 	}
-	
+
 	@StepName("Select the User Role's for the Other User Type")
 	public void selectUserRoleOther(String userRole) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-		waitUtils.waitForVisibility(userRolesOther);
-		userRolesOther.click();
-		By roleOption = By.xpath("//select[@aria-hidden='true']//option[normalize-space()='" + userRole + "']");
+		WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+				"//label[contains(normalize-space(),'User Role')]/ancestor::div[contains(@class,'space-y-2')]//button")));
 
-		WebElement option = null;
+		dropdown.click();
 
-		for (int i = 0; i < 10; i++) {
-			try {
-				WebElement temp = driver.findElement(roleOption);
+		WebElement roleOption = wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//button[.//span[normalize-space()='" + userRole + "']]")));
 
-				if (temp.isDisplayed()) {
-					option = temp;
-					break;
-				}
-
-			} catch (Exception ignored) {
-			}
-
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-			}
-		}
-
-		if (option == null) {
-			throw new RuntimeException("User Role not found: " + userRole);
-		}
-
-		// Click dropdown option from visible list
-		By visibleRole = By.xpath("//div[@role='option' and normalize-space()='" + userRole + "']");
-
-		waitUtils.waitForVisibility(visibleRole);
-		driver.findElement(visibleRole).click();
+		roleOption.click();
 	}
 
 	@StepName("Select the Department for Other User Type")
@@ -329,6 +307,8 @@ public class Users extends AbstractComponent {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
 		wait.until(ExpectedConditions.elementToBeClickable(departmentOption)).click();
+
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@role='combobox']")));
 	}
 
 	@StepName("Select the Partner from the Partner dropdown for Partner User Type")

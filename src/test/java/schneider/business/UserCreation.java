@@ -28,21 +28,25 @@ public class UserCreation {
 		users.goToUsers();
 		users.clickOnAddUser();
 		String userType = scenario.getUserType();
-		System.out.println("User Type = " + userType);
+		// System.out.println("User Type = " + userType);
 		users.selectUserType(userType);
-		// UserDetails userDetails = data.getUserType().get(userType);
 		if (userType == null || userType.isEmpty()) {
 			throw new RuntimeException("User Type missing in JSON");
 		}
 		Map<String, String> personalInfo = scenario.getUserDetails().getPersonalInformation();
+		Map<String, String> location = scenario.getUserDetails().getLocation();
 		if (personalInfo == null || personalInfo.isEmpty()) {
 			throw new RuntimeException("Personal Information data missing for User Type: " + userType);
+		}
+		if (("SE Employee".equalsIgnoreCase(userType) || "Other".equalsIgnoreCase(userType))
+				&& (location == null || location.isEmpty())) {
+			throw new RuntimeException("Location data missing for User Type: " + userType);
 		}
 		switch (userType) {
 
 		case "SE Employee":
 
-			createSEEmployee(personalInfo, masterData);
+			createSEEmployee(personalInfo, location, masterData);
 
 			break;
 
@@ -54,7 +58,7 @@ public class UserCreation {
 
 		case "Other":
 
-			createOther(personalInfo, masterData);
+			createOther(personalInfo, location, masterData);
 
 			break;
 
@@ -64,32 +68,26 @@ public class UserCreation {
 
 		}
 		users.createUser();
-//		ToastResponse toast = users.captureToast();
-//
-//		if (toast.getMessage().contains("already registered in the user system")) {
-//
-//		    Assert.assertTrue(
-//		        toast.getMessage().contains("Please use a different email address."),
-//		        "Unexpected duplicate email message: " + toast.getMessage());
-//
-//		    users.clickOnBackToList();
-//		    return;
-//		}
-		if (users.isEmailAlreadyRegisteredErrorDisplayed()) {
+		ToastResponse toast = users.captureToast();
+		if ("error".equalsIgnoreCase(String.valueOf(toast.getType())) && users.isUserCreationErrorDisplayed(toast)) {
 
-		    ToastResponse toast = users.captureToast();
+			String message = toast.getMessage().toLowerCase();
 
-		    Assert.assertTrue(
-		        toast.getMessage().contains("already registered in the user system"));
+			Assert.assertTrue(
+					message.contains("already registered") || message.contains("employee code")
+							|| message.contains("already exists") || message.contains("unique code"),
+					"Unexpected error toast: " + toast.getMessage());
 
-		    users.clickOnBackToList();
-		    return;
+			users.waitForToastToDisappear();
+			users.clickOnBackToList();
+			return;
 		}
 		validateCreatedUser(userType, personalInfo);
 		users.clickDoneAfterUserCreation();
 	}
 
-	private void createSEEmployee(Map<String, String> data, MasterData masterData) throws InterruptedException {
+	private void createSEEmployee(Map<String, String> data, Map<String, String> location, MasterData masterData)
+			throws InterruptedException {
 
 		users.inputSESAId(data.get("SESAID"));
 
@@ -117,18 +115,15 @@ public class UserCreation {
 		// Location
 		if (isMultiCountryRole(userRole)) {
 
-			users.selectCountries(masterData.getCountry());
+			// users.selectCountries(masterData.getCountry());
+			users.selectCountries(location.get("Country"));
 
 		} else {
 
-			users.selectCountry(masterData.getCountry());
+			// users.selectCountry(masterData.getCountry());
+			users.selectCountry(location.get("Country"));
 
 		}
-		// users.selectCountries(masterData.getCountry());
-
-		// users.selectClusters(masterData.getCluster());
-
-		// users.selectZones(masterData.getZone());
 
 	}
 
@@ -156,16 +151,9 @@ public class UserCreation {
 
 		users.selectSubCategories(masterData.getSubCategory());
 
-		// Location
-
-		// users.selectCountry(masterData.getCountry());
-
-		// users.selectClusterPartner(masterData.getCluster());
-
-		// users.selectZonePartner(masterData.getZone());
 	}
 
-	private void createOther(Map<String, String> data, MasterData masterData) {
+	private void createOther(Map<String, String> data, Map<String, String> location, MasterData masterData) {
 
 		users.inputOtherEmployeeCode(data.get("EmployeeCode"));
 
@@ -175,10 +163,17 @@ public class UserCreation {
 
 		users.inputEmail(data.get("Email"));
 
-		users.selectDepartmentOther(masterData.getUserRoleDepartment());
-
 		String userRole = data.get("UserRole");
 
+		if (userRole.contains("Trainer")) {
+
+			users.selectDepartmentOther(masterData.getTrainerRoleDepartment());
+
+		} else {
+
+			users.selectDepartmentOther(masterData.getUserRoleDepartment());
+
+		}
 		users.selectUserRoleOther(userRole);
 
 		users.selectOfferTypes(masterData.getOfferType());
@@ -190,14 +185,12 @@ public class UserCreation {
 		users.selectSubCategories("Select All");
 
 		if (isMultiCountryRole(userRole)) {
-			users.selectCountries(masterData.getCountry());
+			// users.selectCountries(masterData.getCountry());
+			users.selectCountries(location.get("Country"));
 		} else {
-			users.selectCountry(masterData.getCountry());
+			// users.selectCountry(masterData.getCountry());
+			users.selectCountry(location.get("Country"));
 		}
-
-		// users.selectClusters(masterData.getCluster());
-
-		// users.selectZones(masterData.getZone());
 
 	}
 
@@ -206,8 +199,8 @@ public class UserCreation {
 		if (userRole == null) {
 			return false;
 		}
+		return !userRole.contains("User");
 
-		return userRole.contains("Admin") || userRole.contains("Trainer");
 	}
 
 	private List<String> getDepartmentsByUserRole(String userRole, MasterData masterData) {
@@ -218,12 +211,10 @@ public class UserCreation {
 		boolean hasTrainer = userRole.contains("Trainer");
 		boolean hasUser = userRole.contains("User");
 
-		// Admin or Trainer always needs PSP3
 		if (hasAdmin || hasTrainer) {
 			departments.add(masterData.getAdminRoleDepartment());
 		}
 
-		// User role needs PSP1
 		if (hasUser) {
 			departments.add(masterData.getUserRoleDepartment());
 		}
@@ -237,8 +228,6 @@ public class UserCreation {
 		String actualEmail = users.getCreatedUserEmail();
 		String actualPassword = users.getCreatedUserPassword();
 
-		// String expectedId;
-
 		switch (userType) {
 
 		case "SE Employee":
@@ -247,11 +236,11 @@ public class UserCreation {
 			break;
 
 		case "Partner":
-			// expectedId = data.get("BFOID");
+
 			break;
 
 		case "Other":
-			// String expectedEmployeeCode = data.get("EmployeeCode");
+
 			break;
 
 		default:

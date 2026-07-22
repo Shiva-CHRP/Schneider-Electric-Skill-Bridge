@@ -38,6 +38,7 @@ public class UserTestValidations extends BaseTest {
 	String actualCluster;
 	String actualCountry;
 	String actualPartner;
+	String groupName;
 
 	@Test(priority = 1, groups = { "Smoke", "Regression" })
 	@TestInfo(module = "Login", description = "Verify successful login using a valid email address and password.", priority = "Critical")
@@ -66,19 +67,16 @@ public class UserTestValidations extends BaseTest {
 		actualOfferType = offerType.getOfferTypeFromList("Offer Type", expectedOfferType);
 		if (actualOfferType == null) {
 
-			// System.out.println("Offer Type not found. Creating: " + expectedOfferType);
-
 			offerType.createOfferType(expectedOfferType);
 			offerType.createOffer();
 			offerType.goToOfferTypePage();
 			offerType.goToFirstPage();
 			actualOfferType = offerType.getOfferTypeFromList("Offer Type", expectedOfferType);
 			Assert.assertNotNull(actualOfferType, "Offer Type creation failed: " + expectedOfferType);
-			// masterData.setOfferType(expectedOfferType);
 
 		} else {
 
-			System.out.println("Offer Type already exists: " + actualOfferType);
+			// System.out.println("Offer Type already exists: " + actualOfferType);
 
 			Assert.assertEquals(actualOfferType, expectedOfferType);
 		}
@@ -97,7 +95,6 @@ public class UserTestValidations extends BaseTest {
 			actualCategory = category.getCategoryFromList("Category", ecpectedCategoryName);
 
 			if (actualCategory == null) {
-				// System.out.println("Category not found. Creating: " + ecpectedCategoryName);
 				category.createCategory(ecpectedCategoryName);
 				category.selectOfferType(actualOfferType);
 				category.saveCategory();
@@ -107,12 +104,10 @@ public class UserTestValidations extends BaseTest {
 				Assert.assertNotNull(actualCategory, "Category creation failed :" + ecpectedCategoryName);
 			} else {
 
-				System.out.println("Category already exists: " + actualCategory);
+				// System.out.println("Category already exists: " + actualCategory);
 
 				Assert.assertEquals(actualCategory, ecpectedCategoryName);
 			}
-			// masterData.setCategory(ecpectedCategoryName);
-
 		}
 	}
 
@@ -131,8 +126,6 @@ public class UserTestValidations extends BaseTest {
 				actualSubCategory = subCategory.getSubCategoryFromList("Subcategory", expectedSubCategoryName);
 
 				if (actualSubCategory == null) {
-					// System.out.println("Sub category not found. Creating: " +
-					// expectedSubCategoryName);
 					subCategory.createSubCategory(expectedSubCategoryName);
 					subCategory.selectCategory(actualCategory);
 					subCategory.saveSubCategory();
@@ -142,11 +135,10 @@ public class UserTestValidations extends BaseTest {
 					Assert.assertNotNull(actualSubCategory, "Sub Category creation failed :" + expectedSubCategoryName);
 				} else {
 
-					System.out.println("Sub Category already exists: " + actualSubCategory);
+					// System.out.println("Sub Category already exists: " + actualSubCategory);
 
 					Assert.assertEquals(actualSubCategory, expectedSubCategoryName);
 				}
-				// masterData.setSubCategory(expectedSubCategoryName);
 
 			}
 		}
@@ -173,7 +165,7 @@ public class UserTestValidations extends BaseTest {
 		actualZone = zone.getZoneFromList("Zone", expectedZone);
 
 		if (actualZone == null) {
-			zone.createZone(actualZone);
+			zone.createZone(expectedZone);
 			zone.createZone();
 			zone.goToZone();
 			zone.goToFirstPage();
@@ -181,11 +173,10 @@ public class UserTestValidations extends BaseTest {
 			Assert.assertNotNull(actualZone, "Zone creation failed: " + expectedZone);
 		} else {
 
-			System.out.println("Zone already exists: " + actualZone);
+			// System.out.println("Zone already exists: " + actualZone);
 
 			Assert.assertEquals(actualZone, expectedZone);
 		}
-		// masterData.setZone(expectedZone);
 
 	}
 
@@ -209,11 +200,11 @@ public class UserTestValidations extends BaseTest {
 				Assert.assertNotNull(actualCluster, "Cluster creation failed :" + ecpectedClusterName);
 			} else {
 
-				System.out.println("Category already exists: " + actualCategory);
+				// System.out.println("Category already exists: " + actualCategory);
 
 				Assert.assertEquals(actualCluster, ecpectedClusterName);
 			}
-			// masterData.setCluster(ecpectedClusterName);
+
 		}
 	}
 
@@ -241,11 +232,10 @@ public class UserTestValidations extends BaseTest {
 					Assert.assertNotNull(actualCountry, "Country creation failed :" + expectedCountryName);
 				} else {
 
-					System.out.println("Category already exists: " + actualCategory);
+					// System.out.println("Category already exists: " + actualCategory);
 
 					Assert.assertEquals(actualCountry, expectedCountryName);
 				}
-				// masterData.setCountry(expectedCountryName);
 			}
 		}
 	}
@@ -270,11 +260,10 @@ public class UserTestValidations extends BaseTest {
 
 		} else {
 
-			System.out.println("Partner already exists: " + actualPartner);
+			// System.out.println("Partner already exists: " + actualPartner);
 
 			Assert.assertEquals(actualPartner, expectedPartner);
 		}
-		// masterData.setPartner(expectedPartner);
 	}
 
 	@Test(priority = 11, dependsOnMethods = { "get_the_Offer", "get_the_Category", "get_the_Sub_Category",
@@ -307,8 +296,32 @@ public class UserTestValidations extends BaseTest {
 	}
 
 	@Test(priority = 12, groups = { "Smoke", "Regression" })
-	@TestInfo(module = "User", description = "Verify the successful creation of an SE Employee user with the User role when valid SESA ID, personal details, email address, organization, category, and location are provided", priority = "Critical")
+	@TestInfo(module = "User", description = "Verify the successful creation of an SE Employee user with the Admin role when valid SESA ID, personal details, email address, organization, category, and location are provided", priority = "Critical")
 	public void verifySEAdminUserCreation() throws InterruptedException {
+
+		UserCreation userCreation = new UserCreation(users);
+
+		UserScenario scenario = getScenario("SE_Admin");
+
+		userCreation.createUser(scenario, masterData);
+
+	}
+
+	@Test(priority = 13, groups = { "Smoke", "Regression" })
+	@TestInfo(module = "User", description = "Verify the successful creation of an SE Employee user with the Trainer role when valid SESA ID, personal details, email address, organization, category, and location are provided", priority = "Critical")
+	public void verifySETrainerUserCreation() throws InterruptedException {
+
+		UserCreation userCreation = new UserCreation(users);
+
+		UserScenario scenario = getScenario("SE_Trainer");
+
+		userCreation.createUser(scenario, masterData);
+
+	}
+
+	@Test(priority = 14, groups = { "Smoke", "Regression" })
+	@TestInfo(module = "User", description = "Verify the successful creation of an SE Employee user with the User role when valid SESA ID, personal details, email address, organization, category, and location are provided", priority = "Critical")
+	public void verifySEUserUserCreation() throws InterruptedException {
 
 		UserCreation userCreation = new UserCreation(users);
 
@@ -317,8 +330,111 @@ public class UserTestValidations extends BaseTest {
 		userCreation.createUser(scenario, masterData);
 
 	}
+
+	@Test(priority = 15, groups = { "Smoke", "Regression" })
+	@TestInfo(module = "User", description = "Verify the successful creation of an SE Employee user with the Admin & Trainer role when valid SESA ID, personal details, email address, organization, category, and location are provided", priority = "Critical")
+	public void verifySEAdminTrainerUserCreation() throws InterruptedException {
+
+		UserCreation userCreation = new UserCreation(users);
+
+		UserScenario scenario = getScenario("SE_Admin_Trainer");
+
+		userCreation.createUser(scenario, masterData);
+
+	}
+
+	@Test(priority = 16, groups = { "Smoke", "Regression" })
+	@TestInfo(module = "User", description = "Verify the successful creation of an SE Employee user with the Admin & User role when valid SESA ID, personal details, email address, organization, category, and location are provided", priority = "Critical")
+	public void verifySEAdminUserUserCreation() throws InterruptedException {
+
+		UserCreation userCreation = new UserCreation(users);
+
+		UserScenario scenario = getScenario("SE_Admin_User");
+
+		userCreation.createUser(scenario, masterData);
+
+	}
+
+	@Test(priority = 17, groups = { "Smoke", "Regression" })
+	@TestInfo(module = "User", description = "Verify the successful creation of an SE Employee user with the Trainer & User role when valid SESA ID, personal details, email address, organization, category, and location are provided", priority = "Critical")
+	public void verifySETrainerUserUserCreation() throws InterruptedException {
+
+		UserCreation userCreation = new UserCreation(users);
+
+		UserScenario scenario = getScenario("SE_Trainer_User");
+
+		userCreation.createUser(scenario, masterData);
+
+	}
+
+	@Test(priority = 18, groups = { "Smoke", "Regression" })
+	@TestInfo(module = "User", description = "Verify the successful creation of an SE Employee user with the Admin, Trainer & User role when valid SESA ID, personal details, email address, organization, category, and location are provided", priority = "Critical")
+	public void verifySEAdminTrainerUserUserCreation() throws InterruptedException {
+
+		UserCreation userCreation = new UserCreation(users);
+
+		UserScenario scenario = getScenario("SE_Admin_Trainer_User");
+
+		userCreation.createUser(scenario, masterData);
+
+	}
+
+	@Test(priority = 19, groups = { "Smoke", "Regression" })
+	@TestInfo(module = "User", description = "Verify the successful creation of an Partner user with the User role when valid Partner, bFO ID, personal details, email address, organization, category, and location are provided", priority = "Critical")
+	public void verifyParterUserCreation() throws InterruptedException {
+
+		UserCreation userCreation = new UserCreation(users);
+
+		UserScenario scenario = getScenario("Partner");
+
+		userCreation.createUser(scenario, masterData);
+
+	}
+
+	@Test(priority = 20, groups = { "Smoke", "Regression" })
+	@TestInfo(module = "User", description = "Verify the successful creation of an Other user with the Trainer role when valid Employee code, personal details, email address, organization, category, and location are provided", priority = "Critical")
+	public void verifyOtherTrainerUserCreation() throws InterruptedException {
+
+		UserCreation userCreation = new UserCreation(users);
+
+		UserScenario scenario = getScenario("Other_Trainer");
+
+		userCreation.createUser(scenario, masterData);
+
+	}
+
+	@Test(priority = 21, groups = { "Smoke", "Regression" })
+	@TestInfo(module = "User", description = "Verify the successful creation of an Other user with the User role when valid Employee code, personal details, email address, organization, category, and location are provided", priority = "Critical")
+	public void verifyOtherUserCreation() throws InterruptedException {
+
+		UserCreation userCreation = new UserCreation(users);
+
+		UserScenario scenario = getScenario("Other_User");
+
+		userCreation.createUser(scenario, masterData);
+
+	}
 	
-	@Test(priority = 13, groups = { "Smoke", "Regression" })
+	@Test(priority = 22, groups = { "Smoke", "Regression" })
+	@TestInfo(module = "Master", description = "Verify the successful creation of a Groups in the Group Master", priority = "Critical")
+	public void verifyGroupMasterCreation() throws InterruptedException {
+		
+		groupMaster.goToGroupMaster();
+		groupMaster.clickOnAddGroup();
+		groupName=actualOfferType+" Group";
+		groupMaster.inputGroupName(groupName);
+		groupMaster.selectOfferType(actualOfferType);
+		groupMaster.selectCategories("Select All");
+		groupMaster.selectSubCategories("Select All");
+		groupMaster.selectZone("Select All");
+		groupMaster.selectCluster("Select All");
+		groupMaster.selectCountries("Select All");
+		groupMaster.selectFirstRow();
+		groupMaster.clickCancel();
+
+	}
+
+	@Test(priority = 23, groups = { "Smoke", "Regression" })
 	@TestInfo(module = "Login", description = "Validate successful user logout and redirection to the Login screen.", priority = "Critical")
 	public void validateLogoutFromApplication() {
 		loginPage.clickLogOut();
@@ -491,7 +607,7 @@ public class UserTestValidations extends BaseTest {
 
 		} else {
 
-			System.out.println("Department already exists: " + actualDepartment);
+			// System.out.println("Department already exists: " + actualDepartment);
 			Assert.assertEquals(actualDepartment, departmentName);
 		}
 

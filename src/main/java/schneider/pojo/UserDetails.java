@@ -3,6 +3,11 @@ package schneider.pojo;
 import java.util.Map;
 
 public class UserDetails {
+	private Map<String,String> personalInformation;
+
+    private Map<String,String> organizationCategory;
+
+    private Map<String,String> location;
 
     public Map<String, String> getPersonalInformation() {
 		return personalInformation;
@@ -28,10 +33,6 @@ public class UserDetails {
 		this.location = location;
 	}
 
-	private Map<String,String> personalInformation;
-
-    private Map<String,String> organizationCategory;
-
-    private Map<String,String> location;
+	
 
 }

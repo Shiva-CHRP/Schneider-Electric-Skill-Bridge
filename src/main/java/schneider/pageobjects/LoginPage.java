@@ -30,7 +30,7 @@ public class LoginPage extends AbstractComponent {
 	@FindBy(xpath = "//button[@type='submit']")
 	WebElement signinButton;
 	
-	@FindBy(xpath = "//button[.//span[normalize-space()='Logout']]")
+	@FindBy(xpath = "//button[.//span[normalize-space()='Sign Out']]")
 	WebElement logoutButton;
 	
 	@FindBy(xpath = "//h2[normalize-space()='Dashboard']")

@@ -5,14 +5,16 @@
       "userType": "SE Employee",
       "userDetails": {
         "personalInformation": {
-          "SESAID": "64434367",
+          "SESAID": "60434367",
           "FirstName": "John",
           "LastName": "Smith",
-          "Email": "john.admin@test.com",
+          "Email": "sandeep@se.com",
           "UserRole": "Admin"
         },
         "organizationCategory": {},
-        "location": {}
+        "location": {
+			"Country": "Argentina"
+		}
       }
     },
 
@@ -20,14 +22,16 @@
       "userType": "SE Employee",
       "userDetails": {
         "personalInformation": {
-          "SESAID": "64434368",
+          "SESAID": "60434368",
           "FirstName": "John",
           "LastName": "Smith",
-          "Email": "john.trainer@test.com",
+          "Email": "wick.john@se.com",
           "UserRole": "Trainer"
         },
         "organizationCategory": {},
-        "location": {}
+        "location": {
+			"Country": "Australia"
+		}
       }
     },
 
@@ -35,14 +39,16 @@
       "userType": "SE Employee",
       "userDetails": {
         "personalInformation": {
-          "SESAID": "34565432",
+          "SESAID": "30565432",
           "FirstName": "David",
           "LastName": "Smithy",
-          "Email": "david.user@test.com",
+          "Email": "smith.mahesh@se.com",
           "UserRole": "User"
         },
         "organizationCategory": {},
-        "location": {}
+        "location": {
+			"Country": "Algeria"
+		}
       }
     },
 
@@ -50,14 +56,16 @@
       "userType": "SE Employee",
       "userDetails": {
         "personalInformation": {
-          "SESAID": "64434370",
+          "SESAID": "60434370",
           "FirstName": "John",
           "LastName": "Smith",
-          "Email": "john.admintrainer@test.com",
+          "Email": "zahra.trivedi@se.com",
           "UserRole": "Admin+Trainer"
         },
         "organizationCategory": {},
-        "location": {}
+        "location": {
+			"Country": "Bolivia"
+		}
       }
     },
 
@@ -65,14 +73,16 @@
       "userType": "SE Employee",
       "userDetails": {
         "personalInformation": {
-          "SESAID": "64434371",
+          "SESAID": "60434371",
           "FirstName": "John",
           "LastName": "Smith",
-          "Email": "john.adminuser@test.com",
+          "Email": "whitepaper@yopmail.com",
           "UserRole": "Admin+User"
         },
         "organizationCategory": {},
-        "location": {}
+        "location": {
+			"Country": "Brazil"
+		}
       }
     },
 
@@ -80,14 +90,16 @@
       "userType": "SE Employee",
       "userDetails": {
         "personalInformation": {
-          "SESAID": "64434372",
+          "SESAID": "60434372",
           "FirstName": "John",
           "LastName": "Smith",
-          "Email": "john.traineruser@test.com",
+          "Email": "mahesh@se.com",
           "UserRole": "Trainer+User"
         },
         "organizationCategory": {},
-        "location": {}
+        "location": {
+			"Country": "Laos"
+		}
       }
     },
 
@@ -95,14 +107,16 @@
       "userType": "SE Employee",
       "userDetails": {
         "personalInformation": {
-          "SESAID": "64434373",
+          "SESAID": "60434373",
           "FirstName": "John",
           "LastName": "Smith",
-          "Email": "john.admintraineruser@test.com",
+          "Email": "ganesh.raykar@se.com",
           "UserRole": "Admin+Trainer+User"
         },
         "organizationCategory": {},
-        "location": {}
+        "location": {
+			"Country": "India"
+		}
       }
     },
 
@@ -114,7 +128,7 @@
           "BFOID": "94783583858587",
           "FirstName": "Rahul",
           "LastName": "David",
-          "Email": "drahul.partner@test.com",
+          "Email": "adani.s@partner.com",
           "UserRole": "User"
         },
         "organizationCategory": {},
@@ -126,14 +140,16 @@
       "userType": "Other",
       "userDetails": {
         "personalInformation": {
-          "EmployeeCode": "EMP001",
+          "EmployeeCode": "EMP000007",
           "FirstName": "Mike",
           "LastName": "Taylor",
-          "Email": "mike.trainer@test.com",
+          "Email": "mike.trainer2@nonse.com",
           "UserRole": "Trainer"
         },
         "organizationCategory": {},
-        "location": {}
+        "location": {
+			"Country": "Russia"
+		}
       }
     },
 
@@ -141,14 +157,16 @@
       "userType": "Other",
       "userDetails": {
         "personalInformation": {
-          "EmployeeCode": "EMP000003",
+          "EmployeeCode": "EMP000008",
           "FirstName": "Mike",
           "LastName": "Taylor",
-          "Email": "taylor.user@test.com",
+          "Email": "taylor.user2@nonse.com",
           "UserRole": "User"
         },
         "organizationCategory": {},
-        "location": {}
+        "location": {
+			"Country": "Peru"
+		}
       }
     }
 

@@ -42,9 +42,6 @@ public class OfferType extends AbstractComponent {
 	@FindBy(xpath = "//button[@type='submit']")
 	WebElement offerSave;
 
-//	@FindBy(xpath = "//button[.//*[contains(@class,'lucide-chevron-right')]]")
-//	private List<WebElement> nextButton;
-
 	private By nextButton = By.xpath("//button[.//*[contains(@class,'lucide-chevron-right')]]");
 
 	@FindBy(xpath = "//input[@placeholder='Search offer types...']")
@@ -194,27 +191,5 @@ public class OfferType extends AbstractComponent {
 	public void waitForToastToDisappear() {
 		toastUtils.waitForToastToDisappear();
 	}
-	/*
-	 * public WebElement waitForToast() {
-	 * 
-	 * WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-	 * 
-	 * return
-	 * wait.until(ExpectedConditions.visibilityOfElementLocated(toastLocator)); }
-	 * 
-	 * public String getToastType() {
-	 * 
-	 * WebElement toast = waitUtils.waitForVisibility(toastLocator);
-	 * 
-	 * String type = toast.getAttribute("data-type");
-	 * 
-	 * return type != null ? type.trim() : ""; }
-	 * 
-	 * public String getToastMessage() {
-	 * 
-	 * WebElement toast = waitUtils.waitForVisibility(toastLocator);
-	 * 
-	 * return toast.getText().trim(); }
-	 */
 
 }
