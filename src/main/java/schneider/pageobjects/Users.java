@@ -12,6 +12,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import schneider.abstractcomponent.AbstractComponent;
 import schneider.annotations.StepName;
@@ -59,8 +60,6 @@ public class Users extends AbstractComponent {
 	@FindBy(xpath = "//label[contains(.,'User Role')]/parent::div//input")
 	WebElement userRolesPartner;
 
-	// @FindBy(xpath = "//button[@role='combobox']//span[normalize-space()='Select
-	// role']/parent::button")
 	@FindBy(xpath = "//label[contains(normalize-space(),'User Role')]/following-sibling::div//button")
 	WebElement userRolesOther;
 
@@ -123,6 +122,48 @@ public class Users extends AbstractComponent {
 	@FindBy(xpath = "//button[normalize-space()='Done']")
 	private WebElement doneButtonAfterUserCreation;
 
+	@FindBy(xpath = "//div[@role='menu' and @data-state='open']//div[@role='menuitem' and normalize-space()='Edit']")
+	private WebElement editOption;
+
+	@FindBy(xpath = "//div[@role='menu' and @data-state='open']//div[@role='menuitem' and normalize-space()='Delete']")
+	private WebElement deleteOption;
+
+	@FindBy(xpath = "//div[@role='menu' and @data-state='open']//div[@role='menuitem' and normalize-space()='Change Password']")
+	private WebElement changePasswordOption;
+
+	@FindBy(xpath = "//h2[normalize-space()='Change Password']")
+	WebElement changePasswordLabel;
+
+	@FindBy(xpath = "//input[@name='admin-set-new-password']")
+	WebElement setNewPassword;
+
+	@FindBy(xpath = "//input[@name='admin-set-confirm-password']")
+	WebElement confirmNewPassword;
+
+	@FindBy(xpath = "//button[normalize-space()='Update Password']")
+	private WebElement updatePasswordButton;
+
+	@FindBy(xpath = "//button[normalize-space()='Cancel']")
+	private WebElement cancelPasswordButton;
+
+	@FindBy(xpath = "//button[normalize-space()='Cancel']")
+	WebElement cancelDeleteModel;
+
+	@FindBy(xpath = "//button[normalize-space()='Delete']")
+	WebElement userDeletePermanentlyButton;
+
+	@FindBy(xpath = "//button[@type='submit' and normalize-space()='Update User']")
+	private WebElement updateUserButton;
+
+	@FindBy(xpath = "//div[@role='menu' and @data-state='open']//div[@role='menuitem' and normalize-space()='View']")
+	private WebElement viewOption;
+
+	@FindBy(xpath = "//h2[normalize-space()='Change Password']")
+	WebElement userDetailsLabel;
+
+	@FindBy(xpath = "//button[normalize-space()='Back to List']")
+	WebElement viewBackToListButton;
+
 	@StepName("Navigated to the User Screen")
 	public void goToUsers() {
 		userNavigation.click();
@@ -143,9 +184,6 @@ public class Users extends AbstractComponent {
 	@StepName("Created a new User")
 	public void createUser() throws InterruptedException {
 		createUser.click();
-//		Thread.sleep(1000);
-//		System.out.println(driver.getPageSource());
-		// waitElementToAppear(createdUserId);
 	}
 
 	@StepName("Click on the 'Back To List' Button for Exsiting from User Creation screen")
@@ -159,12 +197,10 @@ public class Users extends AbstractComponent {
 	public boolean isUserCreationErrorDisplayed(ToastResponse toast) {
 		String toastMessage = toast.getMessage().toLowerCase();
 
-	    //System.out.println("Toast detected: " + toastMessage);
+		// System.out.println("Toast detected: " + toastMessage);
 
-	    return toastMessage.contains("already registered")
-	            || toastMessage.contains("employee code")
-	            || toastMessage.contains("already exists")
-	            || toastMessage.contains("unique code");
+		return toastMessage.contains("already registered") || toastMessage.contains("employee code")
+				|| toastMessage.contains("already exists") || toastMessage.contains("unique code");
 	}
 
 	@StepName("Validating Email Error while Creating the User")
@@ -579,6 +615,186 @@ public class Users extends AbstractComponent {
 
 		waitUtils.waitForClickable(option);
 		driver.findElement(option).click();
+	}
+
+	public int getColumnIndex(String columnName) {
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+		By headersLocator = By.xpath("//table//thead//th");
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(headersLocator));
+
+		List<WebElement> headers = driver.findElements(headersLocator);
+
+		for (int i = 0; i < headers.size(); i++) {
+
+			if (headers.get(i).getText().trim().equalsIgnoreCase(columnName)) {
+				return i + 1;
+			}
+		}
+
+		throw new RuntimeException("Column not found: " + columnName);
+
+	}
+
+	@StepName("Verified the Created Users is present in the Users Management list")
+	public boolean isUserPresentInList(String columnName, String expectedValue) {
+		search(expectedValue);
+
+		if (!driver.findElements(By.xpath("//*[contains(text(),'No data found')]")).isEmpty()) {
+			return false;
+		}
+
+		int columnIndex = getColumnIndex(columnName);
+
+		List<WebElement> rows = driver.findElements(By.xpath("//table//tbody//tr/td[" + columnIndex + "]"));
+
+		return rows.stream().map(WebElement::getText).map(String::trim)
+				.anyMatch(text -> text.equalsIgnoreCase(expectedValue));
+
+	}
+
+	@StepName("Retrieved the Users from the Users Management list")
+	public String getUserFromList(String columnName, String expectedValue) {
+		search(expectedValue);
+
+		if (!driver.findElements(By.xpath("//table//tbody//td[contains(text(),'No data found')]")).isEmpty()) {
+			return null;
+		}
+
+		int columnIndex = getColumnIndex(columnName);
+
+		List<WebElement> users = driver.findElements(By.xpath("//table//tbody//tr/td[" + columnIndex + "]"));
+
+		for (WebElement user : users) {
+
+			String actualCurriculums = user.getText().trim();
+
+			if (actualCurriculums.equalsIgnoreCase(expectedValue)) {
+				return actualCurriculums.replaceAll("\\s+", " ");
+			}
+		}
+
+		return null;
+	}
+
+	public void clickActionMenu(String itemName) {
+		driver.findElement(By.xpath("//tr[td[contains(.,'" + itemName + "')]]//button[@aria-haspopup='menu']")).click();
+	}
+
+	public void clickEdit() {
+		waitElementToBeClickable(editOption);
+		editOption.click();
+	}
+
+	@StepName("Click on Update User")
+	public void clickUpdateUser() {
+		waitElementToBeClickable(updateUserButton);
+		updateUserButton.click();
+	}
+
+	public void clickDelete() {
+		waitElementToBeClickable(deleteOption);
+		deleteOption.click();
+	}
+
+	public void clickCancelDelete() {
+		waitElementToBeClickable(cancelDeleteModel);
+		cancelDeleteModel.click();
+	}
+
+	public void clickUserDeletePermanently() {
+		waitElementToBeClickable(userDeletePermanentlyButton);
+		userDeletePermanentlyButton.click();
+	}
+
+	public void clickChangePassword() {
+		waitElementToBeClickable(changePasswordOption);
+		changePasswordOption.click();
+		waitElementToAppear(changePasswordLabel);
+	}
+
+	public void inputSetNewPassword(String passwords) {
+		waitElementToBeClickable(setNewPassword);
+		setNewPassword.sendKeys(passwords);
+	}
+
+	public void inputConfirmNewPassword(String passwords) {
+		waitElementToBeClickable(confirmNewPassword);
+		confirmNewPassword.sendKeys(passwords);
+	}
+
+	public void clickOnUpdatePasswordButton() {
+		waitElementToBeClickable(updatePasswordButton);
+		updatePasswordButton.click();
+	}
+
+	public void clickOnCancelPasswordButton() {
+		waitElementToBeClickable(cancelPasswordButton);
+		cancelPasswordButton.click();
+	}
+
+	@StepName("Verify Change Password Dialog Displayed")
+	public boolean isChangePasswordDialogDisplayed() {
+
+		try {
+
+			waitElementToAppear(changePasswordLabel);
+			return changePasswordLabel.isDisplayed();
+
+		} catch (Exception e) {
+
+			return false;
+		}
+	}
+
+	@StepName("Get validation message for field")
+	public String getMandatoryValidationMessage(String fieldName) {
+
+		By locator = By.xpath("//label[contains(normalize-space(),'" + fieldName + "')]" + "/following::p[1]");
+
+		waitUtils.waitForVisibility(locator);
+
+		return driver.findElement(locator).getText().trim();
+	}
+
+	public void clickViewButton() {
+		waitElementToBeClickable(viewOption);
+		viewOption.click();
+		waitElementToAppear(userDetailsLabel);
+	}
+
+	public String getFieldValue(String fieldName) {
+		String xpath = "//span[normalize-space()='" + fieldName + "']/following-sibling::div";
+		return driver.findElement(By.xpath(xpath)).getText().trim();
+	}
+
+	@StepName("Verify User Details Field Value")
+	public void verifyFieldValue(String fieldName, String expectedValue) {
+
+		String actualValue = getFieldValue(fieldName);
+
+		Assert.assertEquals(actualValue, expectedValue,
+				fieldName + " mismatch. Expected: " + expectedValue + " but found: " + actualValue);
+	}
+
+	@StepName("Click on the 'Back To List' Button for Exsiting from User Creation screen")
+	public void clickOnViewBackToListButton() {
+		waitElementToAppear(viewBackToListButton);
+		viewBackToListButton.click();
+		waitElementToAppear(userScreenName);
+	}
+
+	public boolean isNoDataFoundDisplayed() {
+
+		return !driver.findElements(By.xpath("//*[contains(text(),'No data found')]")).isEmpty();
+	}
+	@StepName("Search User")
+	public void searchUser(String value) {
+
+	    search(value); // calls AbstractComponent search()
+
 	}
 
 	public ToastResponse captureToast() {

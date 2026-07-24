@@ -1,0 +1,87 @@
+{
+  "contentHubScenarios": {
+
+    "PLC_Video": {
+      "curriculum": {
+        "name": "Automation Curriculum",
+        "description": "Automation Testing Curriculum",
+        "offerType": "Industrial Automation",
+        "category": "PLC",
+        "subCategory": "EcoStruxure",
+        "coverImage": "src/test/resources/testdata/images/cover.png"
+      },
+      "content": {
+        "offerType": "Industrial Automation",
+        "category": "PLC",
+        "subCategory": "EcoStruxure",
+        "curriculum": "Automation Curriculum",
+        "lessonTitle": "Introduction to PLC",
+        "contentType": "Video",
+        "sourceType": "Upload File",
+        "filePath": "src/test/resources/testdata/videos/plc.mp4",
+        "externalLink": "",
+		"versionNote":"",
+        "duration": {
+          "hours": "00",
+          "minutes": "15",
+          "seconds": "30"
+        }
+      }
+    },
+
+    "PLC_PDF": {
+      "curriculum": {
+        "name": "Automation Curriculum",
+        "description": "Automation Testing Curriculum",
+        "offerType": "Industrial Automation",
+        "category": "PLC",
+        "subCategory": "EcoStruxure",
+        "coverImage": "src/test/resources/testdata/images/cover.png"
+      },
+      "content": {
+        "offerType": "Industrial Automation",
+        "category": "PLC",
+        "subCategory": "EcoStruxure",
+        "curriculum": "Automation Curriculum",
+        "lessonTitle": "PLC Documentation",
+        "contentType": "PDF",
+        "sourceType": "External Link",
+        "filePath": "",
+        "externalLink": "https://example.com/plc.pdf",
+        "duration": {
+          "hours": "00",
+          "minutes": "00",
+          "seconds": "00"
+        }
+      }
+    },
+
+    "PLC_Presentation": {
+      "curriculum": {
+        "name": "Automation Curriculum",
+        "description": "Automation Testing Curriculum",
+        "offerType": "Industrial Automation",
+        "category": "PLC",
+        "subCategory": "EcoStruxure",
+        "coverImage": "src/test/resources/testdata/images/cover.png"
+      },
+      "content": {
+        "offerType": "Industrial Automation",
+        "category": "PLC",
+        "subCategory": "EcoStruxure",
+        "curriculum": "Automation Curriculum",
+        "lessonTitle": "PLC Basics PPT",
+        "contentType": "Presentation",
+        "sourceType": "Upload File",
+        "filePath": "src/test/resources/testdata/files/plc_basics.pptx",
+        "externalLink": "",
+        "duration": {
+          "hours": "00",
+          "minutes": "20",
+          "seconds": "00"
+        }
+      }
+    }
+
+  }
+}

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import schneider.pojo.ContentHubTestData;
 import schneider.pojo.DepartmentData;
 import schneider.pojo.OfferData;
 import schneider.pojo.PartnerData;
@@ -111,6 +112,18 @@ public class TestDataUtil {
 		} catch (IOException e) {
 			throw new RuntimeException("Failed to read JSON file", e);
 		}
+	}
+
+	public static ContentHubTestData getContentHubTestData(String filePath) {
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		try {
+			return mapper.readValue(new File(filePath), ContentHubTestData.class);
+		} catch (IOException e) {
+			throw new RuntimeException("Failed to read JSON file", e);
+		}
+
 	}
 
 }

@@ -9,12 +9,13 @@
           "FirstName": "John",
           "LastName": "Smith",
           "Email": "sandeep@se.com",
+          "Password": "Welcome@123",
           "UserRole": "Admin"
         },
         "organizationCategory": {},
         "location": {
-			"Country": "Argentina"
-		}
+          "Country": "Argentina"
+        }
       }
     },
 
@@ -30,8 +31,8 @@
         },
         "organizationCategory": {},
         "location": {
-			"Country": "Australia"
-		}
+          "Country": "Australia"
+        }
       }
     },
 
@@ -47,8 +48,8 @@
         },
         "organizationCategory": {},
         "location": {
-			"Country": "Algeria"
-		}
+          "Country": "Algeria"
+        }
       }
     },
 
@@ -64,8 +65,8 @@
         },
         "organizationCategory": {},
         "location": {
-			"Country": "Bolivia"
-		}
+          "Country": "Bolivia"
+        }
       }
     },
 
@@ -81,8 +82,8 @@
         },
         "organizationCategory": {},
         "location": {
-			"Country": "Brazil"
-		}
+          "Country": "Brazil"
+        }
       }
     },
 
@@ -98,8 +99,8 @@
         },
         "organizationCategory": {},
         "location": {
-			"Country": "Laos"
-		}
+          "Country": "Laos"
+        }
       }
     },
 
@@ -115,8 +116,8 @@
         },
         "organizationCategory": {},
         "location": {
-			"Country": "India"
-		}
+          "Country": "India"
+        }
       }
     },
 
@@ -148,8 +149,8 @@
         },
         "organizationCategory": {},
         "location": {
-			"Country": "Russia"
-		}
+          "Country": "Russia"
+        }
       }
     },
 
@@ -165,10 +166,110 @@
         },
         "organizationCategory": {},
         "location": {
-			"Country": "Peru"
-		}
+          "Country": "Peru"
+        }
       }
     }
+  },
 
+  "editUserScenarios": {
+
+    "SE_Admin_Edit": {
+      "userType": "SE Employee",
+      "userDetails": {
+        "personalInformation": {
+          "SESAID": "60434367",
+          "FirstName": "John Updated",
+          "LastName": "Smith Updated",
+          "Email": "sandeep@se.com",
+          "UserRole": "Admin+Trainer"
+        },
+        "organizationCategory": {},
+        "location": {
+          "Country": "India"
+        }
+      }
+    },
+
+    "Partner_Edit": {
+      "userType": "Partner",
+      "userDetails": {
+        "personalInformation": {
+          "Partner": "Adani Switchgear Pvt Ltd",
+          "BFOID": "94783583858587",
+          "FirstName": "Rahul Updated",
+          "LastName": "David Updated",
+          "Email": "adani.s@partner.com",
+          "UserRole": "User"
+        },
+        "organizationCategory": {},
+        "location": {}
+      }
+    },
+
+    "Other_Edit": {
+      "userType": "Other",
+      "userDetails": {
+        "personalInformation": {
+          "EmployeeCode": "EMP000007",
+          "FirstName": "Mike Updated",
+          "LastName": "Taylor Updated",
+          "Email": "mike.trainer2@nonse.com",
+          "UserRole": "Trainer"
+        },
+        "organizationCategory": {},
+        "location": {
+          "Country": "Canada"
+        }
+      }
+    }
+  },
+
+  "mandatoryValidationScenarios": {
+
+    "SE_Employee": {
+      "userType": "SE Employee"
+    },
+
+    "Partner": {
+      "userType": "Partner"
+    },
+
+    "Other": {
+      "userType": "Other"
+    }
+  },
+
+  "changePasswordScenarios": {
+
+    "SE_Admin": {
+      "userType": "SE Employee",
+      "userDetails": {
+        "personalInformation": {
+          "Email": "sandeep@se.com",
+          "Password": "Welcome@123"
+        }
+      }
+    },
+
+    "Partner": {
+      "userType": "Partner",
+      "userDetails": {
+        "personalInformation": {
+          "Email": "adani.s@partner.com",
+          "Password": "Welcome@123"
+        }
+      }
+    },
+
+    "Other": {
+      "userType": "Other",
+      "userDetails": {
+        "personalInformation": {
+          "Email": "mike.trainer2@nonse.com",
+          "Password": "Welcome@123"
+        }
+      }
+    }
   }
 }

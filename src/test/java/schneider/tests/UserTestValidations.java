@@ -8,10 +8,13 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import schneider.annotations.TestInfo;
-import schneider.business.UserCreation;
+import schneider.business.ContentHubManager;
+import schneider.business.UsersManagement;
 import schneider.listenr.Listener;
 import schneider.pojo.CategoryData;
 import schneider.pojo.ClusterData;
+import schneider.pojo.ContentHubScenario;
+import schneider.pojo.ContentHubTestData;
 import schneider.pojo.DepartmentData;
 import schneider.pojo.MasterData;
 import schneider.pojo.OfferData;
@@ -299,9 +302,9 @@ public class UserTestValidations extends BaseTest {
 	@TestInfo(module = "User", description = "Verify the successful creation of an SE Employee user with the Admin role when valid SESA ID, personal details, email address, organization, category, and location are provided", priority = "Critical")
 	public void verifySEAdminUserCreation() throws InterruptedException {
 
-		UserCreation userCreation = new UserCreation(users);
+		UsersManagement userCreation = new UsersManagement(users);
 
-		UserScenario scenario = getScenario("SE_Admin");
+		UserScenario scenario = getUserScenario("userScenarios","SE_Admin");
 
 		userCreation.createUser(scenario, masterData);
 
@@ -311,9 +314,9 @@ public class UserTestValidations extends BaseTest {
 	@TestInfo(module = "User", description = "Verify the successful creation of an SE Employee user with the Trainer role when valid SESA ID, personal details, email address, organization, category, and location are provided", priority = "Critical")
 	public void verifySETrainerUserCreation() throws InterruptedException {
 
-		UserCreation userCreation = new UserCreation(users);
+		UsersManagement userCreation = new UsersManagement(users);
 
-		UserScenario scenario = getScenario("SE_Trainer");
+		UserScenario scenario = getUserScenario("userScenarios","SE_Trainer");
 
 		userCreation.createUser(scenario, masterData);
 
@@ -323,9 +326,9 @@ public class UserTestValidations extends BaseTest {
 	@TestInfo(module = "User", description = "Verify the successful creation of an SE Employee user with the User role when valid SESA ID, personal details, email address, organization, category, and location are provided", priority = "Critical")
 	public void verifySEUserUserCreation() throws InterruptedException {
 
-		UserCreation userCreation = new UserCreation(users);
+		UsersManagement userCreation = new UsersManagement(users);
 
-		UserScenario scenario = getScenario("SE_User");
+		UserScenario scenario = getUserScenario("userScenarios","SE_User");
 
 		userCreation.createUser(scenario, masterData);
 
@@ -335,9 +338,9 @@ public class UserTestValidations extends BaseTest {
 	@TestInfo(module = "User", description = "Verify the successful creation of an SE Employee user with the Admin & Trainer role when valid SESA ID, personal details, email address, organization, category, and location are provided", priority = "Critical")
 	public void verifySEAdminTrainerUserCreation() throws InterruptedException {
 
-		UserCreation userCreation = new UserCreation(users);
+		UsersManagement userCreation = new UsersManagement(users);
 
-		UserScenario scenario = getScenario("SE_Admin_Trainer");
+		UserScenario scenario = getUserScenario("userScenarios","SE_Admin_Trainer");
 
 		userCreation.createUser(scenario, masterData);
 
@@ -347,9 +350,9 @@ public class UserTestValidations extends BaseTest {
 	@TestInfo(module = "User", description = "Verify the successful creation of an SE Employee user with the Admin & User role when valid SESA ID, personal details, email address, organization, category, and location are provided", priority = "Critical")
 	public void verifySEAdminUserUserCreation() throws InterruptedException {
 
-		UserCreation userCreation = new UserCreation(users);
+		UsersManagement userCreation = new UsersManagement(users);
 
-		UserScenario scenario = getScenario("SE_Admin_User");
+		UserScenario scenario = getUserScenario("userScenarios","SE_Admin_User");
 
 		userCreation.createUser(scenario, masterData);
 
@@ -359,9 +362,9 @@ public class UserTestValidations extends BaseTest {
 	@TestInfo(module = "User", description = "Verify the successful creation of an SE Employee user with the Trainer & User role when valid SESA ID, personal details, email address, organization, category, and location are provided", priority = "Critical")
 	public void verifySETrainerUserUserCreation() throws InterruptedException {
 
-		UserCreation userCreation = new UserCreation(users);
+		UsersManagement userCreation = new UsersManagement(users);
 
-		UserScenario scenario = getScenario("SE_Trainer_User");
+		UserScenario scenario = getUserScenario("userScenarios","SE_Trainer_User");
 
 		userCreation.createUser(scenario, masterData);
 
@@ -371,9 +374,9 @@ public class UserTestValidations extends BaseTest {
 	@TestInfo(module = "User", description = "Verify the successful creation of an SE Employee user with the Admin, Trainer & User role when valid SESA ID, personal details, email address, organization, category, and location are provided", priority = "Critical")
 	public void verifySEAdminTrainerUserUserCreation() throws InterruptedException {
 
-		UserCreation userCreation = new UserCreation(users);
+		UsersManagement userCreation = new UsersManagement(users);
 
-		UserScenario scenario = getScenario("SE_Admin_Trainer_User");
+		UserScenario scenario = getUserScenario("userScenarios","SE_Admin_Trainer_User");
 
 		userCreation.createUser(scenario, masterData);
 
@@ -383,9 +386,9 @@ public class UserTestValidations extends BaseTest {
 	@TestInfo(module = "User", description = "Verify the successful creation of an Partner user with the User role when valid Partner, bFO ID, personal details, email address, organization, category, and location are provided", priority = "Critical")
 	public void verifyParterUserCreation() throws InterruptedException {
 
-		UserCreation userCreation = new UserCreation(users);
+		UsersManagement userCreation = new UsersManagement(users);
 
-		UserScenario scenario = getScenario("Partner");
+		UserScenario scenario = getUserScenario("userScenarios","Partner");
 
 		userCreation.createUser(scenario, masterData);
 
@@ -395,9 +398,9 @@ public class UserTestValidations extends BaseTest {
 	@TestInfo(module = "User", description = "Verify the successful creation of an Other user with the Trainer role when valid Employee code, personal details, email address, organization, category, and location are provided", priority = "Critical")
 	public void verifyOtherTrainerUserCreation() throws InterruptedException {
 
-		UserCreation userCreation = new UserCreation(users);
+		UsersManagement userCreation = new UsersManagement(users);
 
-		UserScenario scenario = getScenario("Other_Trainer");
+		UserScenario scenario = getUserScenario("userScenarios","Other_Trainer");
 
 		userCreation.createUser(scenario, masterData);
 
@@ -407,21 +410,21 @@ public class UserTestValidations extends BaseTest {
 	@TestInfo(module = "User", description = "Verify the successful creation of an Other user with the User role when valid Employee code, personal details, email address, organization, category, and location are provided", priority = "Critical")
 	public void verifyOtherUserCreation() throws InterruptedException {
 
-		UserCreation userCreation = new UserCreation(users);
+		UsersManagement userCreation = new UsersManagement(users);
 
-		UserScenario scenario = getScenario("Other_User");
+		UserScenario scenario = getUserScenario("userScenarios","Other_User");
 
 		userCreation.createUser(scenario, masterData);
 
 	}
-	
+
 	@Test(priority = 22, groups = { "Smoke", "Regression" })
 	@TestInfo(module = "Master", description = "Verify the successful creation of a Groups in the Group Master", priority = "Critical")
 	public void verifyGroupMasterCreation() throws InterruptedException {
-		
+
 		groupMaster.goToGroupMaster();
 		groupMaster.clickOnAddGroup();
-		groupName=actualOfferType+" Group";
+		groupName = actualOfferType + " Group";
 		groupMaster.inputGroupName(groupName);
 		groupMaster.selectOfferType(actualOfferType);
 		groupMaster.selectCategories("Select All");
@@ -434,7 +437,20 @@ public class UserTestValidations extends BaseTest {
 
 	}
 
+	/*
 	@Test(priority = 23, groups = { "Smoke", "Regression" })
+	@TestInfo(module = "Content Hub", description = "Verify the successful creation of a Content for Curriculum", priority = "Critical")
+	public void verifyContentCreation() throws InterruptedException {
+
+		ContentHubManager contentHubCreation = new ContentHubManager(contentHub);
+
+		ContentHubScenario scenario = getContentScenario("");
+
+		contentHubCreation.createContentHubData(scenario);
+
+	}*/
+
+	@Test(priority = 24, groups = { "Smoke", "Regression" })
 	@TestInfo(module = "Login", description = "Validate successful user logout and redirection to the Login screen.", priority = "Critical")
 	public void validateLogoutFromApplication() {
 		loginPage.clickLogOut();
@@ -587,6 +603,17 @@ public class UserTestValidations extends BaseTest {
 				.map(entry -> new Object[] { entry.getKey(), entry.getValue() }).toArray(Object[][]::new);
 	}
 
+	@DataProvider(name = "contentHubTestData")
+	public Object[][] contentHubTestData() {
+
+		String path = System.getProperty("user.dir") + "/src/main/resources/testdata/contentHubTestData.json";
+
+		ContentHubTestData data = TestDataUtil.getContentHubTestData(path);
+
+		return data.getContentHubScenarios().entrySet().stream()
+				.map(entry -> new Object[] { entry.getKey(), entry.getValue() }).toArray(Object[][]::new);
+	}
+
 	private String createDepartmentIfNotExists(String departmentName) {
 
 		department.goToFirstPage();
@@ -614,20 +641,56 @@ public class UserTestValidations extends BaseTest {
 		return actualDepartment;
 	}
 
-	private UserScenario getScenario(String scenarioName) {
+	private UserScenario getUserScenario(String sectionName, String scenarioName) {
 
 		String path = System.getProperty("user.dir") + "/src/main/resources/testdata/UserTestData.json";
 
 		UsersTestData data = TestDataUtil.getUserTestData(path);
 
-		UserScenario scenario = data.getUserScenarios().get(scenarioName);
+		UserScenario scenario = null;
+
+		switch (sectionName) {
+
+		case "userScenarios":
+			scenario = data.getUserScenarios().get(scenarioName);
+			break;
+
+		case "editUserScenarios":
+			scenario = data.getEditUserScenarios().get(scenarioName);
+			break;
+
+		case "mandatoryValidationScenarios":
+			scenario = data.getMandatoryValidationScenarios().get(scenarioName);
+			break;
+
+		case "changePasswordScenarios":
+			scenario = data.getChangePasswordScenarios().get(scenarioName);
+			break;
+
+		default:
+			throw new RuntimeException("Invalid JSON Section : " + sectionName);
+		}
 
 		if (scenario == null) {
-			throw new RuntimeException("Scenario not found in JSON : " + scenarioName);
+			throw new RuntimeException("Scenario not found : " + scenarioName + " under section : " + sectionName);
 		}
 
 		return scenario;
+	}
 
+	private ContentHubScenario getContentScenario(String scenarioName) {
+
+		String path = System.getProperty("user.dir") + "/src/main/resources/testdata/contentHubTestData.json";
+
+		ContentHubTestData data = TestDataUtil.getContentHubTestData(path);
+
+		ContentHubScenario scenario = data.getContentHubScenarios().get(scenarioName);
+
+		if (scenario == null) {
+			throw new RuntimeException("Scenario not found: " + scenarioName);
+		}
+
+		return scenario;
 	}
 
 }

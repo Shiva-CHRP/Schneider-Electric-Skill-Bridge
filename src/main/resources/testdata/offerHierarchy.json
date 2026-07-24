@@ -1,11 +1,11 @@
 [
   {
-    "offerName": "Offer1",
+    "offerName": "Industrial Automation Software",
     "categories": [
       {
-        "categoryName": "Category1",
+        "categoryName": "Operations Management Software",
         "subCategories": [
-          "Subcategory1"
+          "Batch Management"
         ]
       }
     ]
